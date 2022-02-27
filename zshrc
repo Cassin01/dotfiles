@@ -183,7 +183,8 @@ alias typora='open -a typora'
 export PATH="/usr/local/sbin:$PATH"
 # }}}
 
-# openjdk {{{ export JAVA_HOME=`/usr/libexec/java_home -v 15`
+# openjdk {{{
+export JAVA_HOME=`/usr/libexec/java_home -v 15`
 # }}}
 
 # pyenv
