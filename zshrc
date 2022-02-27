@@ -147,6 +147,7 @@ source <(kubectl completion zsh)
 alias memo='cd ~/技術系備忘録'
 alias conf='cd ~/.config/nvim'
 alias plug='cd ~/2021/Vim'
+alias dotfile='cd ~/dotfiles'
 
 alias c='cargo'
 alias nconf='~/.config/nvim/init'
@@ -219,6 +220,31 @@ chpwd() {
 }
 
 alias luamake=/Users/cassin/build_space/lua-language-server/3rd/luamake/luamake
+
+# cd to the path of the front Finder window
+cdf() {
+    target=`osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)'`
+    if [ "$target" != "" ]; then
+        cd "$target"; pwd
+    else
+        echo 'No Finder window found' >&2
+    fi
+}
+
+alias f='open -a Finder ./'
+
+# cd無しでもディレクトリ移動
+setopt auto_cd
+
+# cd -で以前移動したディレクトリを表示
+setopt auto_pushd
+
+# コマンドのスペルをミスして実行した場合に候補を表示
+setopt correct
+
+# 同じコマンドをhistoryに残さない
+setopt hist_ignore_all_dups
+
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
