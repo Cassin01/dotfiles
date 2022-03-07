@@ -42,6 +42,7 @@ values."
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      ivy
+     osx
      auto-completion
      better-defaults
      emacs-lisp
@@ -53,7 +54,7 @@ values."
      ;;        shell-default-position 'bottom)
      spell-checking
      syntax-checking
-     ;; version-control
+     version-control
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -65,6 +66,7 @@ values."
      ;; The Cassin's setting start
      ;; ------------
      minimap
+     olivetti
      ;; ------------
      ;; The Cassin's setting end
      ;; ------------
@@ -326,10 +328,20 @@ before packages are loaded. If you are unsure, you should try in setting them in
         (set-frame-parameter nil 'alpha 75)))
 
   ;;; mozc
-  (require 'mozc)                                 ; mozcの読み込み
-  (set-language-environment "Japanese")           ; 言語環境を"japanese"に
-  (setq default-input-method "japanese-mozc")     ; IMEをjapanes-mozcに
-  (prefer-coding-system 'utf-8)                   ; デフォルトの文字コードをUTF-8に
+  ;(set-language-environment "Japanese")           ; 言語環境を"japanese"に
+  ;(setq default-input-method "japanese-mozc")     ; IMEをjapanes-mozcに
+
+  ; IMEをjapanesに
+  (setq default-input-method "japanese")
+
+  ; デフォルトの文字コードをUTF-8に
+  (prefer-coding-system 'utf-8)
+
+  ;; 起動時で，.zshrcでPATHを設定している軽コックを出さないようにする
+  (setq exec-path-from-shell-check-startup-files nil)
+
+  ;; text completion frame work
+  (add-hook 'after-init-hook 'global-company-mode)
   ;; --------------------------
   ;; The Cassin's settnig end
   ;; --------------------------
@@ -353,6 +365,13 @@ you should place your code here."
 
   ;; always enable indent-guide
   (spacemacs/toggle-indent-guide-on)
+
+  ;; use <C-h> as backspace
+  (global-set-key "\C-h" `delete-backward-char)
+
+  ;;; for plugin olvietti
+  ;; hide mode line
+  (setq olivetti-hide-mode-line t)
   ;; --------------------------
   ;; The Cassin's settnig end
   ;; --------------------------
@@ -365,30 +384,27 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(compilation-message-face (quote default))
+ '(compilation-message-face 'default)
  '(evil-want-Y-yank-to-eol nil)
  '(fci-rule-color "#3C3D37" t)
- '(highlight-changes-colors (quote ("#FD5FF0" "#AE81FF")))
+ '(highlight-changes-colors '("#FD5FF0" "#AE81FF"))
  '(highlight-tail-colors
-   (quote
-    (("#3C3D37" . 0)
+   '(("#3C3D37" . 0)
      ("#679A01" . 20)
      ("#4BBEAE" . 30)
      ("#1DB4D0" . 50)
      ("#9A8F21" . 60)
      ("#A75B00" . 70)
      ("#F309DF" . 85)
-     ("#3C3D37" . 100))))
+     ("#3C3D37" . 100)))
  '(magit-diff-use-overlays nil)
  '(package-selected-packages
-   (quote
-    (web-mode tagedit slim-mode scss-mode sass-mode pug-mode haml-mode emmet-mode company-web web-completion-data web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc coffee-mode powerline hydra lv anzu bind-key avy popup iedit smartparens f evil goto-chg undo-tree flx async projectile dash vimrc-mode dactyl-mode yaml-mode intero hlint-refactor hindent haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode unfill org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mwim htmlize gnuplot minimap smeargle orgit magit-gitflow magit-popup gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link fuzzy flyspell-correct-ivy flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit transient git-commit with-editor company-statistics company-anaconda company auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete mmm-mode markdown-toc markdown-mode gh-md yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional cython-mode anaconda-mode pythonic wgrep smex ivy-hydra counsel-projectile counsel swiper ivy ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump diminish define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
+   '(olivetti git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter diff-hl mozc reveal-in-osx-finder pbcopy osx-trash osx-dictionary launchctl web-mode tagedit slim-mode scss-mode sass-mode pug-mode haml-mode emmet-mode company-web web-completion-data web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc coffee-mode powerline hydra lv anzu bind-key avy popup iedit smartparens f evil goto-chg undo-tree flx async projectile dash vimrc-mode dactyl-mode yaml-mode intero hlint-refactor hindent haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode unfill org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download mwim htmlize gnuplot minimap smeargle orgit magit-gitflow magit-popup gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link fuzzy flyspell-correct-ivy flyspell-correct flycheck-pos-tip pos-tip flycheck evil-magit magit transient git-commit with-editor company-statistics company-anaconda company auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete mmm-mode markdown-toc markdown-mode gh-md yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional cython-mode anaconda-mode pythonic wgrep smex ivy-hydra counsel-projectile counsel swiper ivy ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump diminish define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))
  '(pos-tip-background-color "#FFFACE")
  '(pos-tip-foreground-color "#272822")
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
-   (quote
-    ((20 . "#F92672")
+   '((20 . "#F92672")
      (40 . "#CF4F1F")
      (60 . "#C26C0F")
      (80 . "#E6DB74")
@@ -405,11 +421,10 @@ you should place your code here."
      (300 . "#299BA6")
      (320 . "#2896B5")
      (340 . "#2790C3")
-     (360 . "#66D9EF"))))
+     (360 . "#66D9EF")))
  '(vc-annotate-very-old-color nil)
  '(weechat-color-list
-   (quote
-    (unspecified "#272822" "#3C3D37" "#F70057" "#F92672" "#86C30D" "#A6E22E" "#BEB244" "#E6DB74" "#40CAE4" "#66D9EF" "#FB35EA" "#FD5FF0" "#74DBCD" "#A1EFE4" "#F8F8F2" "#F8F8F0"))))
+   '(unspecified "#272822" "#3C3D37" "#F70057" "#F92672" "#86C30D" "#A6E22E" "#BEB244" "#E6DB74" "#40CAE4" "#66D9EF" "#FB35EA" "#FD5FF0" "#74DBCD" "#A1EFE4" "#F8F8F2" "#F8F8F0")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
