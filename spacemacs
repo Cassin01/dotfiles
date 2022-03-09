@@ -327,9 +327,18 @@ before packages are loaded. If you are unsure, you should try in setting them in
       (progn
         (set-frame-parameter nil 'alpha 75)))
 
+  ;; 言語環境を"japanese"に
+  (set-language-environment "Japanese")
+
   ;;; mozc
-  ;(set-language-environment "Japanese")           ; 言語環境を"japanese"に
-  ;(setq default-input-method "japanese-mozc")     ; IMEをjapanes-mozcに
+  ;;; {{{
+  ; (load "~/.emacs.d/vendor/mozc/mozc.el")
+  ; (setq default-input-method "japanese-mozc")     ; IMEをjapanes-mozcに
+  ; (setq mozc-helper-program-name "mozc_emacs_helper")
+  ; (require 'mozc-popup)
+  ; (setq mozc-candidate-style 'popup) ; select popup style.
+  ; (require 'mozc-cursor-color)v
+  ;;; }}}
 
   ; IMEをjapanesに
   (setq default-input-method "japanese")
@@ -337,7 +346,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ; デフォルトの文字コードをUTF-8に
   (prefer-coding-system 'utf-8)
 
-  ;; 起動時で，.zshrcでPATHを設定している軽コックを出さないようにする
+  ;; 起動時で，.zshrcでPATHを設定していることへの警告を出さないようにする
   (setq exec-path-from-shell-check-startup-files nil)
 
   ;; text completion frame work
@@ -345,7 +354,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
   ;; --------------------------
   ;; The Cassin's settnig end
   ;; --------------------------
-
   )
 
 (defun dotspacemacs/user-config ()
@@ -357,23 +365,29 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
   ;; --------------------------
-  ;; The Cassin's settnig start
+  ;; The Cassin's config start
   ;; --------------------------
   ;; MiniMapを右に表示する
   ;; https://github.com/dengste/minimap/blob/master/minimap.el
   (setq-default minimap-window-location 'right)
+
+  ;; show trailing whitespace
+  (setq-default show-trailing-whitespace t)
 
   ;; always enable indent-guide
   (spacemacs/toggle-indent-guide-on)
 
   ;; use <C-h> as backspace
   (global-set-key "\C-h" `delete-backward-char)
+  (global-set-key (kbd "<F1>") help-map)
 
-  ;;; for plugin olvietti
-  ;; hide mode line
-  (setq olivetti-hide-mode-line t)
+  ;; change cursor color depends on IME status.
+  (add-hook 'input-method-activate-hook
+            '(lambda () (set-cursor-color "coral3")))
+  (add-hook 'input-method-inactivate-hook
+            '(lambda () (set-cursor-color "orchid")))
   ;; --------------------------
-  ;; The Cassin's settnig end
+  ;; The Cassin's config end
   ;; --------------------------
   )
 

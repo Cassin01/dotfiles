@@ -148,6 +148,7 @@ alias memo='cd ~/技術系備忘録'
 alias conf='cd ~/.config/nvim'
 alias plug='cd ~/2021/Vim'
 alias dotfile='cd ~/dotfiles'
+alias lab='cd ~/2022/lab'
 
 alias c='cargo'
 alias nconf='~/.config/nvim/init'
