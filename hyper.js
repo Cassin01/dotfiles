@@ -4,15 +4,19 @@
 // See https://hyper.is#cfg for all currently supported options.
 module.exports = {
     config: {
+        // plugin settings {{{
+        opacity: 0.85,
+        // }}}
+
         // choose either `'stable'` for receiving highly polished,
         // or `'canary'` for less polished but more frequent updates
         updateChannel: 'stable',
         // default font size in pixels for all tabs
         //fontSize: 12, // Default
-        fontSize: 11,
+        fontSize: 16,
         // font family with optional fallbacks
         // fontFamily: 'Menlo, "DejaVu Sans Mono", Consolas, "Lucida Console", monospace',
-            fontFamily: 'Menlo, "DejaVu Sans Mono", Consolas, "Lucida Console", monospace,"Hack Nerd Font" , "Fira Code" , HackGen', // Cassin
+            fontFamily: 'HackGen, Menlo, "DejaVu Sans Mono", Consolas, "Lucida Console", monospace,"Hack Nerd Font" , "Fira Code"', // Cassin
 
         // default font weight: 'normal' or 'bold'
         fontWeight: 'normal',
@@ -156,9 +160,5 @@ module.exports = {
     // Example
     // 'window:devtools': 'cmd+alt+o',
     },
-
-    // config for plugin
-    //  // rest of the config
-    opacity: 1.
 };
 //# sourceMappingURL=config-default.js.map
