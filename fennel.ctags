@@ -1,0 +1,5 @@
+--langdef=fennel
+--langmap=fennel:.fnl
+--kinddef-fennel=f,function,functions
+--kinddef-fennel=v,variable,variables
+--regex-fennel=/^\(fn +(.*)\[/\1/f,function,functions/
