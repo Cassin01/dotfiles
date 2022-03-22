@@ -3,3 +3,4 @@
 --kinddef-fennel=f,function,functions
 --kinddef-fennel=v,variable,variables
 --regex-fennel=/^\(fn +(.*)\[/\1/f,function,functions/
+--regex-fennel=/^\(local +([a-z\-]+) /\1/v,variable,variables/
