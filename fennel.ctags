@@ -3,6 +3,8 @@
 --kinddef-fennel=f,function,functions
 --kinddef-fennel=v,variable,variables
 --kinddef-fennel=m,macro,macros
+--kinddef-fennel=c,comment,comments
 --regex-fennel=/^\(fn +(.*)\[/\1/f,function,functions/
 --regex-fennel=/^\(macro +(.*)\[/\1/m,macro,macros/
 --regex-fennel=/^\(local +([a-z\-]+) /\1/v,variable,variables/
+--regex-fennel=/^\;\;; (.*)$/\1/c,comment,comments/
