@@ -16,7 +16,8 @@ module.exports = {
         fontSize: 16,
         // font family with optional fallbacks
         // fontFamily: 'Menlo, "DejaVu Sans Mono", Consolas, "Lucida Console", monospace',
-            fontFamily: 'HackGen, Menlo, "DejaVu Sans Mono", Consolas, "Lucida Console", monospace,"Hack Nerd Font" , "Fira Code"', // Cassin
+        fontFamily: 'HackGen, Menlo, "DejaVu Sans Mono", Consolas, "Lucida Console", monospace,"Hack Nerd Font" , "Fira Code"', // Cassin
+        // fontFamily: 'HackGen Console',
 
         // default font weight: 'normal' or 'bold'
         fontWeight: 'normal',
@@ -131,6 +132,7 @@ module.exports = {
         webGLRenderer: true,
         // if `true` (without backticks and without quotes), Hyper will ignore ligatures provided by some fonts
         disableLigatures: false,
+        modifierKeys: {altIsMeta: true},
     },
     // a list of plugins to fetch and install from npm
     // format: [@org/]project[#version]
