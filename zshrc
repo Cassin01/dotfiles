@@ -7,7 +7,7 @@ fi
 
 export TERM="xterm-256color" # add by cassin
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/cassin/.oh-my-zsh"
@@ -144,7 +144,7 @@ export PATH=$HOME/.nodebrew/current/bin:$PATH
 # completion of kubennects
 source <(kubectl completion zsh)
 
-alias memo='cd ~/技術系備忘録'
+alias memo='cd ~/tech-memo'
 alias conf='cd ~/.config/nvim'
 alias plug='cd ~/2021/Vim'
 alias dotfile='cd ~/dotfiles'
@@ -152,10 +152,11 @@ alias lab='cd ~/2022/lab'
 
 alias c='cargo'
 alias nconf='~/.config/nvim/init'
-alias ls='exa'
-alias ll='exa -l'
+# alias ls='exa'
+# alias ll='exa -l'
 
 alias nv='nvim'
+alias nvf='nvim $(fzf --height 40% --reverse --border)'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -171,9 +172,9 @@ nvcd() {
 export PATH=~/.local/bin:$PATH
 
 # Stack completion
-autoload -U +X compinit && compinit
-autoload -U +X bashcompinit && bashcompinit
-eval "$(stack --bash-completion-script stack)"
+# autoload -U +X compinit && compinit
+# autoload -U +X bashcompinit && bashcompinit
+# eval "$(stack --bash-completion-script stack)"
 # }}}
 
 # typora {{{
@@ -197,10 +198,11 @@ export GUILE_LOAD_COMPILED_PATH="/usr/local/lib/guile/3.0/site-ccache"
 export GUILE_SYSTEM_EXTENSIONS_PATH="/usr/local/lib/guile/3.0/extensions"
 
 # idris
-export PATH=~/.cabal/bin:$PATH
+# export PATH=~/.cabal/bin:$PATH
 
 # rust
 export PATH="$HOME/.cargo/bin:$PATH"
+export RUSTC_WRAPPER=$(which sccache)
 
 # cのヘッダファイルのパス
 export SDKROOT="$(xcrun --sdk macosx --show-sdk-path)"
@@ -217,20 +219,39 @@ export PKG_CONFIG_PATH="/usr/local/opt/tcl-tk/lib/pkgconfig"
 
 # kitty tab theme
 # precmd () {print -Pn "\e]0;%~\a"}
+export PATH=/usr/bin:$PATH
 chpwd() {
-  ls; echo -ne "\033]0;$(pwd | rev | awk -F \/ '{print "/"$1"/"$2}'| rev)\007"
+  # /bin/ls; echo -ne "\033]0;$(/bin/pwd | rev | /usr/bin/awk -F \/ '{print "/"$1"/"$2}' | /usr/bin/rev )\007"
+  /bin/ls; echo -ne "\033]0;$(/bin/pwd | /usr/bin/rev | /usr/bin/awk -F \/ '{print "/"$1"/"$2}' | /usr/bin/rev )\007"
 }
 
 alias luamake=/Users/cassin/build_space/lua-language-server/3rd/luamake/luamake
 
 # cd to the path of the front Finder window
-cdf() {
+cdfi() {
     target=`osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)'`
     if [ "$target" != "" ]; then
         cd "$target"; pwd
     else
         echo 'No Finder window found' >&2
     fi
+}
+
+# find + fzf
+function cdf() {
+  local dir=$(find . -maxdepth 3 -type d | fzf)
+  if [ "$(echo $dir)" ]; then
+    echo $dir
+    cd $dir
+  fi
+}
+
+function cdfa() {
+  local path=$(find . -maxdepth 3 | fzf)
+  local dir="$(/usr/bin/dirname "${path}")"
+  if [ -d "$dir" ]; then
+    cd $dir
+  fi
 }
 
 alias f='open -a Finder ./'
@@ -251,3 +272,10 @@ setopt hist_ignore_all_dups
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 (( ! ${+functions[p10k]} )) || p10k finalize
+
+export LUA_PATH='/usr/local/Cellar/luarocks/3.8.0/share/lua/5.4/?.lua;/usr/local/share/lua/5.4/?.lua;/usr/local/share/lua/5.4/?/init.lua;/usr/local/lib/lua/5.4/?.lua;/usr/local/lib/lua/5.4/?/init.lua;./?.lua;./?/init.lua;/Users/cassin/.luarocks/share/lua/5.4/?.lua;/Users/cassin/.luarocks/share/lua/5.4/?/init.lua'
+export LUA_CPATH='/usr/local/lib/lua/5.4/?.so;/usr/local/lib/lua/5.4/loadall.so;./?.so;/Users/cassin/.luarocks/lib/lua/5.4/?.so'
+
+# export PATH='/Users/cassin/.luarocks/bin:/Users/cassin/.cargo/bin:/Users/cassin/.cabal/bin:/usr/local/sbin:/Users/cassin/.local/bin:/Users/cassin/.nodebrew/current/bin:/Library/TeX/texbin:/usr/local/opt/tcl-tk/bin:/Users/cassin/.pyenv/shims:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Library/Apple/usr/bin:/Applications/Wireshark.app/Contents/MacOS:/Applications/kitty.app/Contents/MacOS:/Users/cassin/Library/Application Support/Coursier/bin:/Users/k1low/.cabal/bin:/usr/local/opt/fzf/bin'
+
+[ -f "/Users/cassin/.ghcup/env" ] && source "/Users/cassin/.ghcup/env" # ghcup-env
