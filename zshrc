@@ -92,6 +92,9 @@ plugins=(
   git
   zsh-autosuggestions
   zsh-syntax-highlighting
+  docker
+  docker-compose
+  heroku
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -152,8 +155,9 @@ alias lab='cd ~/2022/lab'
 
 alias c='cargo'
 alias nconf='~/.config/nvim/init'
-# alias ls='exa'
-# alias ll='exa -l'
+
+alias ls='exa --icons'
+alias ll='exa --icons -l'
 
 alias nv='nvim'
 alias nvf='nvim $(fzf --height 40% --reverse --border)'
@@ -222,7 +226,7 @@ export PKG_CONFIG_PATH="/usr/local/opt/tcl-tk/lib/pkgconfig"
 export PATH=/usr/bin:$PATH
 chpwd() {
   # /bin/ls; echo -ne "\033]0;$(/bin/pwd | rev | /usr/bin/awk -F \/ '{print "/"$1"/"$2}' | /usr/bin/rev )\007"
-  /bin/ls; echo -ne "\033]0;$(/bin/pwd | /usr/bin/rev | /usr/bin/awk -F \/ '{print "/"$1"/"$2}' | /usr/bin/rev )\007"
+  /usr/local/bin/exa --icons; echo -ne "\033]0;$(/bin/pwd | /usr/bin/rev | /usr/bin/awk -F \/ '{print "/"$1"/"$2}' | /usr/bin/rev )\007"
 }
 
 alias luamake=/Users/cassin/build_space/lua-language-server/3rd/luamake/luamake
