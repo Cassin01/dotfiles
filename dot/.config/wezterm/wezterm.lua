@@ -8,6 +8,7 @@ wezterm.on('update-right-status', function(window, pane)
   window:set_right_status(compose or '')
 end)
 
+
 return {
     -- font = wezterm.font 'HackGen',
     -- font = wezterm.font 'JetBrains Mono',
@@ -24,13 +25,10 @@ return {
         }),
     -- font_size = 20.0,
     font_size = 14.0,
-    -- color_scheme = 'Batman',
-    color_scheme = 'kanagawabones',
+
     window_background_opacity = 1.0, -- 0.7,
     text_background_opacity = 1.0,
-
-    window_background_image = '/Users/cassin/Downloads/630848.jpg',
-    -- window_background_image = '/Users/cassin/all_year/blur/blured.png',
+    window_background_image=os.getenv('HOME')..'/Downloads/630848.jpg',
     window_background_image_hsb = {
       -- Darken the background image by reducing it to 1/3rd
       brightness = 0.3, -- default 0.3
@@ -42,9 +40,14 @@ return {
       saturation = 0.8, -- default 1.0
     },
 
-    colors = {
-      compose_cursor = 'orange',
+    -- color_scheme = 'Batman',
+    color_scheme = 'kanagawabones',
+    color_schemes = {
+      ['kanagawabones'] = {
+          compose_cursor='orange'
+      }
     },
+    tab_bar_at_bottom=true,
 
     -- disable_default_key_bindings = true,
     leader = { key = '\\',  mods = 'CTRL', timeout_milliseconds = 1000 },
