@@ -16,7 +16,7 @@ module.exports = {
         fontSize: 16,
         // font family with optional fallbacks
         // fontFamily: 'Menlo, "DejaVu Sans Mono", Consolas, "Lucida Console", monospace',
-        fontFamily: 'HackGen, Menlo, "DejaVu Sans Mono", Consolas, "Lucida Console", monospace,"Hack Nerd Font" , "Fira Code"', // Cassin
+        fontFamily: 'HackGen Console, Menlo, "DejaVu Sans Mono", Consolas, "Lucida Console", monospace,"Hack Nerd Font" , "Fira Code"', // Cassin
         // fontFamily: 'HackGen Console',
 
         // default font weight: 'normal' or 'bold'
