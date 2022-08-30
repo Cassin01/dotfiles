@@ -1,18 +1,18 @@
 #!/bin/sh
 
-dot_path=$(cd ~/dotfiles/dot/; pwd)
-dot_path_len=${#dot_path}
-home_path=$(cd ~/; pwd)
-base_name=`basename -- "$0"`
+dot="dot/"
+dot_len=${#dot}
 
-find ${dot_path} -type f | {
-    while read line; do
-        if [[ ${line} =~ ^${dot_path}.*$ ]] ; then
-            path_to=${home_path}${line:${dot_path_len}}
-            if [[ ! ${line:${dot_path_len}+1} == ${base_name} ]] ; then
-                ln -sf ${line} ${path_to}
-                echo ${line} "to" ${path_to}
-            fi
-        fi
+dot_path=$(cd ~/dotfiles/${dot}; pwd)
+home_path=$(cd ~/; pwd)
+# base_name=`basename -- "$0"`
+
+git ls-files ${dot_path} | {
+    while read line ; do
+        body_path=${line:${dot_len}}
+        path_to=${home_path}/${body_path}
+        path_from=${dot_path}/${body_path}
+        ln -sf ${path_from} ${path_to}
+        echo "linked" ${path_from} "with" ${path_to}
     done
 }
