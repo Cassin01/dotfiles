@@ -5,7 +5,6 @@ dot_len=${#dot}
 
 dot_path=$(cd ~/dotfiles/${dot}; pwd)
 home_path=$(cd ~/; pwd)
-# base_name=`basename -- "$0"`
 
 git ls-files ${dot_path} | {
     while read line ; do
