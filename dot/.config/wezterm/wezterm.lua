@@ -1,6 +1,6 @@
 local wezterm = require 'wezterm'
 
-wezterm.on('update-right-status', function(window, pane)
+wezterm.on('update-right-status', function(window, _)
   local compose = window:composition_status()
   if compose then
     compose = 'COMPOSING: ' .. compose
@@ -20,7 +20,7 @@ return {
             -- "Lilex",
             -- "JetBrains Mono",
             -- #japanese
-            -- "Hachi Maru Pop",
+            "Hachi Maru Pop",
             -- #{}
         }),
     -- font_size = 20.0,
@@ -28,26 +28,37 @@ return {
 
     window_background_opacity = 1.0, -- 0.7,
     text_background_opacity = 1.0,
-    window_background_image=os.getenv('HOME')..'/Downloads/630848.jpg',
+    window_background_image=os.getenv('HOME')..'/.config/nvim/data/wallpapers/c-o-champion-sona-mutemix-animated.gif',
     window_background_image_hsb = {
       -- Darken the background image by reducing it to 1/3rd
-      brightness = 0.3, -- default 0.3
+      brightness = 0.1, -- default 0.3
       -- You can adjust the hue by scaling its value.
       -- a multiplier of 1.0 leaves the value unchanged.
-      hue = 3.0, -- default 1.0
+      -- hue = 3.0, -- default 1.0
 
       -- You can adjust the saturation also.
-      saturation = 0.8, -- default 1.0
+      -- saturation = 0.8, -- default 1.0
     },
 
     -- color_scheme = 'Batman',
     color_scheme = 'kanagawabones',
-    color_schemes = {
-      ['kanagawabones'] = {
-          compose_cursor='orange'
-      }
-    },
-    tab_bar_at_bottom=true,
+    -- color_schemes = {
+    --   -- ['kanagawabones'] = {
+    --   --     compose_cursor = 'orange',
+    --   -- },
+    -- },
+
+    -- window_decorations = "NONE",
+    window_decorations = "RESIZE",
+    -- window_padding = {
+    --   left = 0,
+    --   right = 0,
+    --   top = 0,
+    --   bottom = 0,
+    -- },
+
+    tab_bar_at_bottom = true,
+    hide_tab_bar_if_only_one_tab = true,
 
     -- disable_default_key_bindings = true,
     leader = { key = '\\',  mods = 'CTRL', timeout_milliseconds = 1000 },
