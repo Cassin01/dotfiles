@@ -10,9 +10,9 @@ local function gi_wh(width, height)
     local w, h = getimagewidthheight(file)
     if w and h then
         if w * height  > h * width then
-            return height * w / h, height
+            return math.ceil(height * w / h), height
         else
-            return width , width * h / w
+            return width , math.ceil(width * h / w)
         end
     else
         return width,height
