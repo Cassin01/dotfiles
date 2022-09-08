@@ -12,7 +12,7 @@ local config = {
             -- "JetBrains Mono",
 
             -- #japanese
-            "Hachi Maru Pop",
+            -- "Hachi Maru Pop",
         }),
     font_size = 14.0,
 

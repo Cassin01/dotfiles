@@ -2,17 +2,35 @@ local wezterm = require("wezterm")
 local conf = require("conf")
 local dimmer = { brightness = 0.1 }
 
+local getimagewidthheight = require("get_img_size")
+
+local file = os.getenv('HOME')..'/.config/nvim/data/wallpapers/thresh.gif'
+
+local function gi_wh(width, height)
+    local w, h = getimagewidthheight(file)
+    if w and h then
+        if w * height  > h * width then
+            return height * w / h, height
+        else
+            return width , width * h / w
+        end
+    else
+        return width,height
+    end
+end
+
 local function recompute_background_size(window)
     local window_dims = window:get_dimensions()
 
     local width = tostring(window_dims.pixel_width)
     local height = tostring(window_dims.pixel_height)
+    width, height = gi_wh(width, height)
 
     conf.background = {
         {
             source = {
                 -- File = os.getenv('HOME')..'/.config/nvim/data/wallpapers/c-o-champion-sona-mutemix-animated.gif',
-                File = os.getenv('HOME')..'/.config/nvim/data/wallpapers/thresh.gif',
+                File =  file,
             },
             -- width = "1920",
             -- height = "1200",
