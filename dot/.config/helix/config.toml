@@ -2,8 +2,28 @@ theme = "tokyonight_storm"
 
 [editor]
 line-number = "relative"
+true-color = true
+scrolloff = 3
+
+[editor.file-picker]
+hidden = false
 
 [editor.cursor-shape]
 insert = "bar"
 normal = "block"
 select = "underline"
+
+[editor.indent-guides]
+render = true
+
+[keys.insert]
+j = { j = "normal_mode"}
+C-v = "select_mode"
+"C-S-h" = "delete_char_backward"
+C-h = "delete_char_forward"
+"down" = "move_line_down"
+"up" = "move_line_down"
+"right" = "move_char_right"
+"left" = "move_char_left"
+"A-right" = "move_next_word_start"
+"A-left" = "move_prev_word_start"

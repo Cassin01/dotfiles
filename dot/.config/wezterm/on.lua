@@ -2,11 +2,11 @@ local wezterm = require("wezterm")
 local conf = require("conf")
 local dimmer = { brightness = 0.1 }
 
-local getimagewidthheight = require("get_img_size")
 
 local file = os.getenv('HOME')..'/.config/nvim/data/wallpapers/thresh.gif'
 
-local function gi_wh(width, height)
+local function resize_wh(width, height)
+    local getimagewidthheight = require("get_img_size")
     local w, h = getimagewidthheight(file)
     if w and h then
         if w * height  > h * width then
@@ -24,7 +24,7 @@ local function recompute_background_size(window)
 
     local width = tostring(window_dims.pixel_width)
     local height = tostring(window_dims.pixel_height)
-    width, height = gi_wh(width, height)
+    width, height = resize_wh(width, height)
 
     conf.background = {
         {

@@ -5,11 +5,12 @@ local config = {
     font = wezterm.font_with_fallback({
             -- #english
             -- "Yuki Code",
-            "NovaMono",
+            -- "NovaMono",
 
             -- #ligature
-            "Lilex",
+            -- "Lilex",
             -- "JetBrains Mono",
+            "Hack Nerd Font",
 
             -- #japanese
             -- "Hachi Maru Pop",
@@ -19,25 +20,25 @@ local config = {
     window_background_opacity = 1.0, -- 0.7,
     text_background_opacity = 1.0,
     -- window_background_image=os.getenv('HOME')..'/.config/nvim/data/wallpapers/c-o-champion-sona-mutemix-animated.gif',
-    background = {
-        {
-            source = {
-                -- File = os.getenv('HOME')..'/.config/nvim/data/wallpapers/c-o-champion-sona-mutemix-animated.gif',
-                File = os.getenv('HOME')..'/.config/nvim/data/wallpapers/thresh.gif',
-            },
-            -- width = "1920",
-            -- height = "1200",
-            width = "2560",
-            height = "1600",
-            -- width = "Contain",
-            repeat_x = "NoRepeat",
-            repeat_y = "NoRepeat",
-            -- vertical_align = 'Bottom',
-            -- repeat_y_size = '200%',
-            hsb = dimmer,
-            -- attachment = { Parallax = 0.2 },
-        }
-    },
+    -- background = {
+    --     {
+    --         source = {
+    --             -- File = os.getenv('HOME')..'/.config/nvim/data/wallpapers/c-o-champion-sona-mutemix-animated.gif',
+    --             File = os.getenv('HOME')..'/.config/nvim/data/wallpapers/thresh.gif',
+    --         },
+    --         -- width = "1920",
+    --         -- height = "1200",
+    --         width = "2560",
+    --         height = "1600",
+    --         -- width = "Contain",
+    --         repeat_x = "NoRepeat",
+    --         repeat_y = "NoRepeat",
+    --         -- vertical_align = 'Bottom',
+    --         -- repeat_y_size = '200%',
+    --         hsb = dimmer,
+    --         -- attachment = { Parallax = 0.2 },
+    --     }
+    -- },
     window_background_image_hsb = {
         brightness = 0.1,
         -- hue = 1.0,
@@ -45,6 +46,7 @@ local config = {
     },
 
     color_scheme = 'kanagawabones',
+    -- color_scheme = 'iceberg-light',
 
     window_decorations = "RESIZE",
     -- window_padding = {
@@ -70,13 +72,20 @@ local config = {
             mods = 'CMD|SHIFT',
             action = wezterm.action.ReloadConfiguration,
         },
+        -- { key = 'Return', action = wezterm.action.SendString '\x0D'},
+        -- { key = 'm', mods='CTRL', action = wezterm.action.SendString '\x1b[109;5u' },
         { key = '@', mods='CTRL|SHIFT', action = wezterm.action.SendString '\x1b[64;5u' },
         { key = 'F', mods='CTRL|SHIFT', action = wezterm.action.SendString '\x1b[70;6u' },
         { key = 'H', mods='CTRL|SHIFT', action = wezterm.action.SendString '\x1b[72;6u' },
+        { key = 'I', mods='CTRL|SHIFT', action = wezterm.action.SendString '\x1b[73;6u' },
         -- { key = 'K', mods='CTRL|SHIFT', action = wezterm.action.SendString '\x1b[75;6u' },
         { key = 'L', mods='CTRL|SHIFT', action = wezterm.action.SendString '\x1b[76;6u' },
+        -- { key = 'M', mods='CTRL|SHIFT', action = wezterm.action.SendString '\x1b[77;6u' },
         { key = 'O', mods='CTRL|SHIFT', action = wezterm.action.SendString '\x1b[79;6u' },
         { key = 'U', mods='CTRL|SHIFT', action = wezterm.action.SendString '\x1b[85;6u' },
+
+        { key = 'i', mods='CTRL', action = wezterm.action.SendString '\x1b[105;5u' },
+        -- { key = 'm', mods='CTRL', action = wezterm.action.SendString '\x1b[109;5u' },
     },
 }
 

@@ -152,6 +152,7 @@ alias conf='cd ~/.config/nvim'
 alias plug='cd ~/2021/Vim'
 alias dotfile='cd ~/dotfiles'
 alias lab='cd ~/2022/lab'
+alias project='cd ~/all_year'
 
 alias c='cargo'
 alias nconf='~/.config/nvim/init'
@@ -214,7 +215,11 @@ export SDKROOT="$(xcrun --sdk macosx --show-sdk-path)"
 # skim: open -a skim hoge.pdf
 alias skim='/Applications/Skim.app/Contents/MacOS/Skim'
 
-export GITHUB_TOKEN="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"
+# gitkraken
+# https://gist.github.com/dersam/0ec781e8fe552521945671870344147b
+function krak () {
+	/Applications/GitKraken.app/Contents/MacOS/GitKraken -p $(pwd)
+}
 
 # tcl-tk (python tkinterが依存している)
 export LDFLAGS="-L/usr/local/opt/tcl-tk/lib"
@@ -259,6 +264,14 @@ function cdfa() {
 }
 
 alias f='open -a Finder ./'
+
+# GitHub CLI: {{{
+eval "$(gh completion -s zsh)"
+function ghcr() {
+  gh repo create "${@}"
+  ghq get "${1}"
+}
+# }}}
 
 # cd無しでもディレクトリ移動
 setopt auto_cd
