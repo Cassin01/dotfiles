@@ -1,12 +1,14 @@
-theme = "tokyonight_storm"
+# theme = "tokyonight_storm"
+theme = "tokyonight_storm_transparent"
 
 [editor]
+gutters = ["diagnostics", "line-numbers"]
 line-number = "relative"
 true-color = true
 scrolloff = 3
 
 [editor.file-picker]
-hidden = false
+# hidden = false
 
 [editor.cursor-shape]
 insert = "bar"
