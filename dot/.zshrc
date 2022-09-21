@@ -263,6 +263,13 @@ function cdfa() {
   fi
 }
 
+function cdm() {
+    cd `path-marker -- show | peco`
+}
+alias mp='path-marker -- mark'
+alias ms='path-marker -- show'
+
+
 alias f='open -a Finder ./'
 
 # GitHub CLI: {{{
