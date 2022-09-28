@@ -246,25 +246,20 @@ cdfi() {
     fi
 }
 
-# find + fzf
 function cdf() {
-  local dir=$(find . -maxdepth 3 -type d | fzf)
-  if [ "$(echo $dir)" ]; then
-    echo $dir
-    cd $dir
-  fi
-}
-
-function cdfa() {
   local path=$(find . -maxdepth 3 | fzf)
   local dir="$(/usr/bin/dirname "${path}")"
-  if [ -d "$dir" ]; then
-    cd $dir
+  if [ -d "${path}" ]; then
+    cd ${path}
+  elif [-d "${dir}" ]; then
+    cd ${dir}
   fi
 }
 
 function cdm() {
-    cd `path-marker -- show | peco`
+  if local output=$(path-marker -- show); then
+    echo "${output}" | peco
+  fi
 }
 alias mp='path-marker -- mark'
 alias ms='path-marker -- show'
@@ -277,6 +272,16 @@ eval "$(gh completion -s zsh)"
 function ghcr() {
   gh repo create "${@}"
   ghq get "${1}"
+}
+# }}}
+
+# rcz {{{
+function gitz() {
+  if local output=$(rcz); then
+    git commit -m "${output}"
+  else
+    echo "Err: failed to generate a commit message"
+  fi
 }
 # }}}
 
