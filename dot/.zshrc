@@ -182,8 +182,17 @@ export PATH=~/.local/bin:$PATH
 # eval "$(stack --bash-completion-script stack)"
 # }}}
 
+alias python3='/Users/cassin/.pyenv/shims/python3'
+alias python='/Users/cassin/.pyenv/shims/python3'
+alias pip3='/Users/cassin/.pyenv/shims/pip3'
+alias pip='/Users/cassin/.pyenv/shims/pip3'
+
 # typora {{{
 alias typora='open -a typora'
+# }}}
+
+# lapce {{{
+alias lapce='open -a /Applications/Lapce.app/Contents/MacOS/lapce'
 # }}}
 
 # Homebrew's sbin {{{
@@ -251,19 +260,23 @@ function cdf() {
   local dir="$(/usr/bin/dirname "${path}")"
   if [ -d "${path}" ]; then
     cd ${path}
-  elif [-d "${dir}" ]; then
+  elif [ -d "${dir}" ]; then
     cd ${dir}
   fi
 }
 
 function cdm() {
-  if local output=$(path-marker -- show); then
-    echo "${output}" | peco
+  if local marker_list=$(path-marker -- show); then
+    if local output=$(echo "${marker_list}" | peco); then
+      cd ${output}
+    fi
   fi
 }
 alias mp='path-marker -- mark'
 alias ms='path-marker -- show'
 
+# icloud driveに移動
+alias icloud='cd ~/Library/Mobile\ Documents/com~apple~CloudDocs'
 
 alias f='open -a Finder ./'
 

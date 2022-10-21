@@ -1,25 +1,30 @@
-local wezterm = require 'wezterm'
+local wezterm = require("wezterm")
 local dimmer = { brightness = 0.1 }
 
 local config = {
     font = wezterm.font_with_fallback({
-            -- #english
-            -- "Yuki Code",
-            -- "NovaMono",
+        -- #english
+        -- "Yuki Code",
+        -- "NovaMono",
 
-            -- #ligature
-            -- "Lilex",
-            -- "JetBrains Mono",
-            "Hack Nerd Font",
+        -- #ligature
+        -- "Lilex",
+        -- "JetBrains Mono",
+        "PlemolJP Console",
+        -- "Hack Nerd Font",
 
-            -- #japanese
-            -- "Hachi Maru Pop",
-        }),
+        -- #japanese
+        -- "Hachi Maru Pop",
+    }),
     font_size = 14.0,
+    -- font_size = 48.0,
+    -- font_size = 18.0,
+    -- font_size = 24.0,
 
-    window_background_opacity = 1.0, -- 0.7,
-    text_background_opacity = 1.0,
+    -- window_background_opacity = 1.0, -- 0.7,
+    -- text_background_opacity = 1.0,
     -- window_background_image=os.getenv('HOME')..'/.config/nvim/data/wallpapers/c-o-champion-sona-mutemix-animated.gif',
+    --
     -- background = {
     --     {
     --         source = {
@@ -39,52 +44,61 @@ local config = {
     --         -- attachment = { Parallax = 0.2 },
     --     }
     -- },
-    window_background_image_hsb = {
-        brightness = 0.1,
-        -- hue = 1.0,
-        -- saturation = 1.0,
-    },
-
-    color_scheme = 'kanagawabones',
-    -- color_scheme = 'iceberg-light',
-
-    window_decorations = "RESIZE",
-    -- window_padding = {
-    --   left = 0,
-    --   right = 0,
-    --   top = 0,
-    --   bottom = 0,
+    -- window_background_image_hsb = {
+    --     brightness = 0.1,
+    --     -- hue = 1.0,
+    --     -- saturation = 1.0,
     -- },
 
+    -- color_scheme = "kanagawabones",
+    color_scheme = "tokyonight-storm",
+    -- color_scheme = "tokyonight-day",
+    -- color_scheme = "TokyoNightStorm (Gogh)",
+    -- color_scheme = 'iceberg-light',
+
+    window_decorations = "RESIZE", -- disable the title bar but eneable the resizable border
+    window_padding = {
+        left = 0,
+        right = 0,
+        top = 0,
+        bottom = 0,
+    },
+
     tab_bar_at_bottom = true,
-    hide_tab_bar_if_only_one_tab = true,
+    enable_tab_bar = false,
+    -- hide_tab_bar_if_only_one_tab = true,
 
     -- disable_default_key_bindings = true,
-    leader = { key = '\\',  mods = 'CTRL', timeout_milliseconds = 1000 },
+    leader = { key = "\\", mods = "CTRL", timeout_milliseconds = 1000 },
     keys = {
         {
-            key = '|',
-            mods = 'LEADER|SHIFT',
-            action = wezterm.action.SplitHorizontal { domain = 'CurrentPaneDomain' },
+            key = "|",
+            mods = "LEADER|SHIFT",
+            action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }),
         },
         {
-            key = 'r',
-            mods = 'CMD|SHIFT',
+            key = "r",
+            mods = "CMD|SHIFT",
             action = wezterm.action.ReloadConfiguration,
+        },
+        {
+            key = "n",
+            mods = "CMD|SHIFT",
+            action = wezterm.action.ToggleFullScreen,
         },
         -- { key = 'Return', action = wezterm.action.SendString '\x0D'},
         -- { key = 'm', mods='CTRL', action = wezterm.action.SendString '\x1b[109;5u' },
-        { key = '@', mods='CTRL|SHIFT', action = wezterm.action.SendString '\x1b[64;5u' },
-        { key = 'F', mods='CTRL|SHIFT', action = wezterm.action.SendString '\x1b[70;6u' },
-        { key = 'H', mods='CTRL|SHIFT', action = wezterm.action.SendString '\x1b[72;6u' },
-        { key = 'I', mods='CTRL|SHIFT', action = wezterm.action.SendString '\x1b[73;6u' },
+        { key = "@", mods = "CTRL|SHIFT", action = wezterm.action.SendString("\x1b[64;5u") },
+        { key = "F", mods = "CTRL|SHIFT", action = wezterm.action.SendString("\x1b[70;6u") },
+        { key = "H", mods = "CTRL|SHIFT", action = wezterm.action.SendString("\x1b[72;6u") },
+        { key = "I", mods = "CTRL|SHIFT", action = wezterm.action.SendString("\x1b[73;6u") },
         -- { key = 'K', mods='CTRL|SHIFT', action = wezterm.action.SendString '\x1b[75;6u' },
-        { key = 'L', mods='CTRL|SHIFT', action = wezterm.action.SendString '\x1b[76;6u' },
+        { key = "L", mods = "CTRL|SHIFT", action = wezterm.action.SendString("\x1b[76;6u") },
         -- { key = 'M', mods='CTRL|SHIFT', action = wezterm.action.SendString '\x1b[77;6u' },
-        { key = 'O', mods='CTRL|SHIFT', action = wezterm.action.SendString '\x1b[79;6u' },
-        { key = 'U', mods='CTRL|SHIFT', action = wezterm.action.SendString '\x1b[85;6u' },
+        { key = "O", mods = "CTRL|SHIFT", action = wezterm.action.SendString("\x1b[79;6u") },
+        { key = "U", mods = "CTRL|SHIFT", action = wezterm.action.SendString("\x1b[85;6u") },
 
-        { key = 'i', mods='CTRL', action = wezterm.action.SendString '\x1b[105;5u' },
+        { key = "i", mods = "CTRL", action = wezterm.action.SendString("\x1b[105;5u") },
         -- { key = 'm', mods='CTRL', action = wezterm.action.SendString '\x1b[109;5u' },
     },
 }
