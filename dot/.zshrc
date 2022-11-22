@@ -144,6 +144,18 @@ export PATH=$PATH:/usr/local/bin
 # nodebrewのパス
 export PATH=$HOME/.nodebrew/current/bin:$PATH
 
+# # ncurses
+# export PATH="/usr/local/opt/ncurses/bin:$PATH"
+# export LDFLAGS="-L/usr/local/opt/ncurses/lib"
+# export CPPFLAGS="-I/usr/local/opt/ncurses/include"
+# export PKG_CONFIG_PATH="/usr/local/opt/ncurses/lib/pkgconfig"
+
+# # libtoolize
+# export LIBTOOL=`which glibtool`
+# export LIBTOOLIZE=`which glibtoolize`
+# ln -s `which glibtoolize` /usr/local/bin/libtoolize
+# ln -s /usr/lib/libncurses.dylib /usr/local/lib/libncursesw.dylib
+
 # completion of kubennects
 source <(kubectl completion zsh)
 
@@ -282,9 +294,32 @@ alias f='open -a Finder ./'
 
 # GitHub CLI: {{{
 eval "$(gh completion -s zsh)"
-function ghcr() {
-  gh repo create "${@}"
-  ghq get "${1}"
+
+# Start to write a new repo
+function gh_start() {
+    /bin/echo -n "Input repo name: "
+    read repo_name
+    /bin/echo -n "Input repo desc: "
+    read repo_desc
+    gh repo create ${repo_name} --private -d "${repo_desc}"
+    ghq get ${repo_name}
+    cd $(ghq list --full-path -e ${repo_name})
+}
+
+# Clone github repo
+function gh_clone() {
+  if local repo_name = $(gh repo list | awk '{print $1}' | peco); then
+    gh clone "https://github.com/${repo_name}.git"
+  else
+    echo "error"
+  fi
+}
+
+# Create repo and push
+function gh_cleate() {
+    /bin/echo -n "Input repo name: "
+    read repo_name
+    gh repo create ${repo_name} --private --push --source ./
 }
 # }}}
 
