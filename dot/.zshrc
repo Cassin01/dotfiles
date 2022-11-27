@@ -1,9 +1,13 @@
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
+
+# 重複パスを登録しない
+typeset -U path PATH
 
 export TERM="xterm-256color" # add by cassin
 # If you come from bash you might have to change your $PATH.
@@ -97,7 +101,7 @@ plugins=(
   heroku
 )
 
-source $ZSH/oh-my-zsh.sh
+source "${ZSH}/oh-my-zsh.sh"
 
 # User configuration
 
@@ -180,7 +184,7 @@ alias nvf='nvim $(fzf --height 40% --reverse --border)'
 # nvr(neovim plugin)
 nvcd() {
     REALPATH=(realpath $1)
-    nvr -c cd $REALPATH
+    nvr -c cd "$REALPATH"
 }
 
 # Stack {{{
@@ -212,7 +216,7 @@ export PATH="/usr/local/sbin:$PATH"
 # }}}
 
 # openjdk {{{
-export JAVA_HOME=`/usr/libexec/java_home -v 15`
+export JAVA_HOME=$(/usr/libexec/java_home -v 15)
 # }}}
 
 # pyenv
@@ -250,37 +254,39 @@ export PKG_CONFIG_PATH="/usr/local/opt/tcl-tk/lib/pkgconfig"
 # kitty tab theme
 # precmd () {print -Pn "\e]0;%~\a"}
 export PATH=/usr/bin:$PATH
-chpwd() {
-  # /bin/ls; echo -ne "\033]0;$(/bin/pwd | rev | /usr/bin/awk -F \/ '{print "/"$1"/"$2}' | /usr/bin/rev )\007"
-  /usr/local/bin/exa --icons; echo -ne "\033]0;$(/bin/pwd | /usr/bin/rev | /usr/bin/awk -F \/ '{print "/"$1"/"$2}' | /usr/bin/rev )\007"
-}
+# chpwd() {
+#   # /bin/ls; echo -ne "\033]0;$(/bin/pwd | rev | /usr/bin/awk -F \/ '{print "/"$1"/"$2}' | /usr/bin/rev )\007"
+#   /usr/local/bin/exa --icons; echo -ne "\033]0;$(/bin/pwd | /usr/bin/rev | /usr/bin/awk -F \/ '{print "/"$1"/"$2}' | /usr/bin/rev )\007"
+# }
 
 alias luamake=/Users/cassin/build_space/lua-language-server/3rd/luamake/luamake
 
 # cd to the path of the front Finder window
 cdfi() {
-    target=`osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)'`
+  target=$(osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)')
     if [ "$target" != "" ]; then
-        cd "$target"; pwd
+        cd "$target" || exit; pwd
     else
         echo 'No Finder window found' >&2
     fi
 }
 
 function cdf() {
-  local path=$(find . -maxdepth 3 | fzf)
-  local dir="$(/usr/bin/dirname "${path}")"
+  local path dir
+  path=$(find . -maxdepth 3 | fzf)
+  dir="$(/usr/bin/dirname "${path}")"
   if [ -d "${path}" ]; then
-    cd ${path}
+    cd "${path}" || exit
   elif [ -d "${dir}" ]; then
-    cd ${dir}
+    cd "${dir}" || exit
   fi
 }
 
 function cdm() {
-  if local marker_list=$(path-marker -- show); then
-    if local output=$(echo "${marker_list}" | peco); then
-      cd ${output}
+  local marker_list output
+  if marker_list=$(path-marker -- show); then
+    if output=$(echo "${marker_list}" | peco); then
+      cd "${output}" || exit
     fi
   fi
 }
@@ -298,18 +304,29 @@ eval "$(gh completion -s zsh)"
 # Start to write a new repo
 function gh_start() {
     /bin/echo -n "Input repo name: "
-    read repo_name
+    read -r repo_name
     /bin/echo -n "Input repo desc: "
-    read repo_desc
-    gh repo create ${repo_name} --private -d "${repo_desc}"
-    ghq get ${repo_name}
-    cd $(ghq list --full-path -e ${repo_name})
+    read -r repo_desc
+    gh repo create "${repo_name}" --private -d "${repo_desc}"
+    ghq get "${repo_name}"
+    cd $(ghq list --full-path -e "${repo_name}") || exit
 }
 
 # Clone github repo
 function gh_clone() {
-  if local repo_name = $(gh repo list | awk '{print $1}' | peco); then
-    gh clone "https://github.com/${repo_name}.git"
+  if local repo_name=$(gh repo list | awk '{print $1}' | peco); then
+    git clone "https://github.com/${repo_name}.git"
+  else
+    echo "error"
+  fi
+}
+
+# Clone github repo
+function ghq_clone() {
+  local repo_name
+  if repo_name=$(gh repo list | awk '{print $1}' | peco); then
+    ghq get "${repo_name}"
+    cd $(ghq list --full-path -e "${repo_name}") || exit
   else
     echo "error"
   fi
@@ -318,14 +335,44 @@ function gh_clone() {
 # Create repo and push
 function gh_cleate() {
     /bin/echo -n "Input repo name: "
-    read repo_name
-    gh repo create ${repo_name} --private --push --source ./
+    read -r repo_name
+    gh repo create "${repo_name}" --private --push --source ./
+}
+
+# Press Ctrl- to display the list of repositories and go to the selected repository.
+function peco_src() {
+    local repo
+    repo=$(ghq list | peco --query "$LBUFFER")
+    if [ -n "${repo}" ]; then
+      repo=$(ghq list --full-path -e "${repo}")
+      BUFFER="cd ${repo}"
+      zle accpet-line
+    fi
+    zle clear-screen
+}
+zle -N peco_src
+bindkey '^]' peco-src
+
+# Go to the ghq dir
+function ghq_cd() {
+  if [ -n "$1" ]; then
+    dir="$(ghq list --full-path --exact "$1")"
+    if [ -z "${dir}" ]; then
+      echo "no directories found for '$1'"
+      return 1
+    fi
+    cd "${dir}" || exit
+    return
+  fi
+  echo 'usage: ghq_cd <repo>'
+  return 1
 }
 # }}}
 
 # rcz {{{
 function gitz() {
-  if local output=$(rcz); then
+  local output
+  if output=$(rcz); then
     git commit -m "${output}"
   else
     echo "Err: failed to generate a commit message"
