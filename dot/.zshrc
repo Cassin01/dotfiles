@@ -340,7 +340,7 @@ function gh_cleate() {
 }
 
 # Press Ctrl- to display the list of repositories and go to the selected repository.
-function peco_src() {
+function ghq_src() {
     local repo
     repo=$(ghq list | peco --query "$LBUFFER")
     if [ -n "${repo}" ]; then
@@ -350,10 +350,10 @@ function peco_src() {
     fi
     zle clear-screen
 }
-zle -N peco_src
-bindkey '^]' peco-src
+zle -N ghq_src
+bindkey '^]' ghq_src
 
-# Go to the ghq dir
+# Go to the ghq dir {{{
 function ghq_cd() {
   if [ -n "$1" ]; then
     dir="$(ghq list --full-path --exact "$1")"
@@ -367,6 +367,13 @@ function ghq_cd() {
   echo 'usage: ghq_cd <repo>'
   return 1
 }
+function _ghq_cd() {
+  _values $(ghq list)
+
+}
+compdef _ghq_cd ghq_cd
+# }}}
+
 # }}}
 
 # rcz {{{
