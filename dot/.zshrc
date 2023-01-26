@@ -1,17 +1,9 @@
-
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 # 重複パスを登録しない
 typeset -U path PATH
 
 export TERM="xterm-256color" # add by cassin
 # If you come from bash you might have to change your $PATH.
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH="$HOME/bin:/usr/local/bin:$PATH"
 
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/cassin/.oh-my-zsh"
@@ -20,24 +12,6 @@ export ZSH="/Users/cassin/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-
-#: Cassin Original start {{{
-
-#ZSH_THEME="robbyrussell"
-ZSH_THEME="powerlevel10k/powerlevel10k"
-
-# ZSH_THEME="powerlevel9k/powerlevel9k"
-#: Customise the Powerlevel9k prompts {{{
-# POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir vcs newline status)
-# POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
-# POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
-#: }}}
-
-# Load Nerd Fonts with Powerlevel9k theme for Zsh
-# POWERLEVEL9K_MODE='nerdfont-complete'
-# source ~/powerlevel9k/powerlevel9k.zsh-theme
-
-#: Cassin Original end }}}
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -135,18 +109,21 @@ export EDITOR='nvim'
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # written by cassin
-export PATH=/Library/TeX/texbin:$PATH
-export PATH=$PATH:/Users/k1low/.cabal/bin
+export PATH="$PATH:/Users/cassin/.bin"
+export PATH="/Library/TeX/texbin:$PATH"
+export PATH="$PATH:/Users/k1low/.cabal/bin"
+export PATH="/usr/local/opt/openssl@3/bin:$PATH"
+export PKG_CONFIG_PATH="/usr/local/opt/openssl@3/lib/pkgconfig"
 
 # Set Spaceship ZSH as a prompt
 autoload -U promptinit; promptinit
 prompt spaceship
 
 # Macのgcc, g++をHomebrewを使って最新版にする
-export PATH=$PATH:/usr/local/bin
+export PATH="$PATH:/usr/local/bin"
 
 # nodebrewのパス
-export PATH=$HOME/.nodebrew/current/bin:$PATH
+export PATH="$HOME/.nodebrew/current/bin:$PATH"
 
 # # ncurses
 # export PATH="/usr/local/opt/ncurses/bin:$PATH"
@@ -169,17 +146,23 @@ alias plug='cd ~/2021/Vim'
 alias dotfile='cd ~/dotfiles'
 alias lab='cd ~/2022/lab'
 alias project='cd ~/all_year'
+alias org = 'cd ~/org'
 
 alias c='cargo'
 alias nconf='~/.config/nvim/init'
 
 alias ls='exa --icons'
 alias ll='exa --icons -l'
+alias la='exa --icons -a'
 
-alias nv='nvim'
+# alias nv='nvim'
 alias nvf='nvim $(fzf --height 40% --reverse --border)'
+alias nvim='/usr/local/Cellar/neovim/HEAD-e336251/bin/nvim'
+
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/dotfiles/seacret/rc.sh ] && source ~/dotfiles/seacret/rc.sh
+[ -f ~/dotfiles/rc/init.sh ] && source ~/dotfiles/rc/init.sh
 
 # nvr(neovim plugin)
 nvcd() {
@@ -190,7 +173,7 @@ nvcd() {
 # Stack {{{
 # Stack経由でインストールしたライブラリなどは、~/.local/bin/以下に保存されるので
 # ~/.local/binにパスを通して置く必要がある。(StackはHaskellのやつ)
-export PATH=~/.local/bin:$PATH
+export PATH="~/.local/bin:$PATH"
 
 # Stack completion
 # autoload -U +X compinit && compinit
@@ -203,9 +186,8 @@ alias python='/Users/cassin/.pyenv/shims/python3'
 alias pip3='/Users/cassin/.pyenv/shims/pip3'
 alias pip='/Users/cassin/.pyenv/shims/pip3'
 
-# typora {{{
 alias typora='open -a typora'
-# }}}
+alias preview='open -a preview'
 
 # lapce {{{
 alias lapce='open -a /Applications/Lapce.app/Contents/MacOS/lapce'
@@ -253,7 +235,7 @@ export PKG_CONFIG_PATH="/usr/local/opt/tcl-tk/lib/pkgconfig"
 
 # kitty tab theme
 # precmd () {print -Pn "\e]0;%~\a"}
-export PATH=/usr/bin:$PATH
+export PATH="/usr/bin:$PATH"
 # chpwd() {
 #   # /bin/ls; echo -ne "\033]0;$(/bin/pwd | rev | /usr/bin/awk -F \/ '{print "/"$1"/"$2}' | /usr/bin/rev )\007"
 #   /usr/local/bin/exa --icons; echo -ne "\033]0;$(/bin/pwd | /usr/bin/rev | /usr/bin/awk -F \/ '{print "/"$1"/"$2}' | /usr/bin/rev )\007"
@@ -261,8 +243,11 @@ export PATH=/usr/bin:$PATH
 
 alias luamake=/Users/cassin/build_space/lua-language-server/3rd/luamake/luamake
 
+# skimで開いたpdfでcommand+shift+クリックでneovim上のtexファイルの該当行に移動
+alias nvimtex="NVIM_LISTEN_ADDRESS=/tmp/nvimsocket nvim"
+
 # cd to the path of the front Finder window
-cdfi() {
+function cdfi() {
   target=$(osascript -e 'tell application "Finder" to if (count of Finder windows) > 0 then get POSIX path of (target of front Finder window as text)')
     if [ "$target" != "" ]; then
         cd "$target" || exit; pwd
@@ -273,7 +258,7 @@ cdfi() {
 
 function cdf() {
   local path dir
-  path=$(find . -maxdepth 3 | fzf)
+  path=$(/usr/bin/find . -maxdepth 3 | /usr/local/bin/fzf)
   dir="$(/usr/bin/dirname "${path}")"
   if [ -d "${path}" ]; then
     cd "${path}" || exit
@@ -298,6 +283,9 @@ alias icloud='cd ~/Library/Mobile\ Documents/com~apple~CloudDocs'
 
 alias f='open -a Finder ./'
 
+# クリップボードに保存するとともに確認する.
+alias teee='tee >(pbcopy)'
+
 # GitHub CLI: {{{
 eval "$(gh completion -s zsh)"
 
@@ -308,6 +296,7 @@ function gh_start() {
     /bin/echo -n "Input repo desc: "
     read -r repo_desc
     gh repo create "${repo_name}" --private -d "${repo_desc}"
+    sleep 2
     ghq get "${repo_name}"
     cd $(ghq list --full-path -e "${repo_name}") || exit
 }
@@ -376,7 +365,8 @@ compdef _ghq_cd ghq_cd
 
 # }}}
 
-# rcz {{{
+# git utils {{{
+# rcz
 function gitz() {
   local output
   if output=$(rcz); then
@@ -384,6 +374,18 @@ function gitz() {
   else
     echo "Err: failed to generate a commit message"
   fi
+}
+
+function gitu() {
+  local res="update: "
+  git status -s | awk '/ M / { print $2 }' | {
+    while read line; do
+      res="${res}${line}"
+      git add "${line}"
+    done
+  }
+  git commit -m "${res}"
+  git push origin main
 }
 # }}}
 
@@ -399,14 +401,12 @@ setopt correct
 # 同じコマンドをhistoryに残さない
 setopt hist_ignore_all_dups
 
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-(( ! ${+functions[p10k]} )) || p10k finalize
-
 export LUA_PATH='/usr/local/Cellar/luarocks/3.8.0/share/lua/5.4/?.lua;/usr/local/share/lua/5.4/?.lua;/usr/local/share/lua/5.4/?/init.lua;/usr/local/lib/lua/5.4/?.lua;/usr/local/lib/lua/5.4/?/init.lua;./?.lua;./?/init.lua;/Users/cassin/.luarocks/share/lua/5.4/?.lua;/Users/cassin/.luarocks/share/lua/5.4/?/init.lua'
 export LUA_CPATH='/usr/local/lib/lua/5.4/?.so;/usr/local/lib/lua/5.4/loadall.so;./?.so;/Users/cassin/.luarocks/lib/lua/5.4/?.so'
 
 # export PATH='/Users/cassin/.luarocks/bin:/Users/cassin/.cargo/bin:/Users/cassin/.cabal/bin:/usr/local/sbin:/Users/cassin/.local/bin:/Users/cassin/.nodebrew/current/bin:/Library/TeX/texbin:/usr/local/opt/tcl-tk/bin:/Users/cassin/.pyenv/shims:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Library/Apple/usr/bin:/Applications/Wireshark.app/Contents/MacOS:/Applications/kitty.app/Contents/MacOS:/Users/cassin/Library/Application Support/Coursier/bin:/Users/k1low/.cabal/bin:/usr/local/opt/fzf/bin'
 
 [ -f "/Users/cassin/.ghcup/env" ] && source "/Users/cassin/.ghcup/env" # ghcup-env
+
+eval "$(starship init zsh)"
+
