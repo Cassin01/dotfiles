@@ -146,7 +146,7 @@ alias plug='cd ~/2021/Vim'
 alias dotfile='cd ~/dotfiles'
 alias lab='cd ~/2022/lab'
 alias project='cd ~/all_year'
-alias org = 'cd ~/org'
+alias org='cd ~/org'
 
 alias c='cargo'
 alias nconf='~/.config/nvim/init'
@@ -286,6 +286,12 @@ alias f='open -a Finder ./'
 # クリップボードに保存するとともに確認する.
 alias teee='tee >(pbcopy)'
 
+# schemeスクリプトを実行
+function runscheme() {
+  # $1: schemeスクリプトのパス(.scm)
+  scheme --quiet "$1"
+}
+
 # GitHub CLI: {{{
 eval "$(gh completion -s zsh)"
 
@@ -362,7 +368,6 @@ function _ghq_cd() {
 }
 compdef _ghq_cd ghq_cd
 # }}}
-
 # }}}
 
 # git utils {{{
