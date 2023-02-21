@@ -6,7 +6,7 @@ export TERM="xterm-256color" # add by cassin
 export PATH="$HOME/bin:/usr/local/bin:$PATH"
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/cassin/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -109,7 +109,7 @@ export EDITOR='nvim'
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 # written by cassin
-export PATH="$PATH:/Users/cassin/.bin"
+export PATH="$PATH:$HOME/.bin"
 export PATH="/Library/TeX/texbin:$PATH"
 export PATH="$PATH:/Users/k1low/.cabal/bin"
 export PATH="/usr/local/opt/openssl@3/bin:$PATH"
@@ -158,11 +158,8 @@ alias la='exa --icons -a'
 # alias nv='nvim'
 alias nvf='nvim $(fzf --height 40% --reverse --border)'
 alias nvim='/usr/local/Cellar/neovim/HEAD-e336251/bin/nvim'
+alias nv='/usr/local/Cellar/neovim/HEAD-e336251/bin/nvim'
 
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -f ~/dotfiles/seacret/rc.sh ] && source ~/dotfiles/seacret/rc.sh
-[ -f ~/dotfiles/rc/init.sh ] && source ~/dotfiles/rc/init.sh
 
 # nvr(neovim plugin)
 nvcd() {
@@ -181,10 +178,10 @@ export PATH="~/.local/bin:$PATH"
 # eval "$(stack --bash-completion-script stack)"
 # }}}
 
-alias python3='/Users/cassin/.pyenv/shims/python3'
-alias python='/Users/cassin/.pyenv/shims/python3'
-alias pip3='/Users/cassin/.pyenv/shims/pip3'
-alias pip='/Users/cassin/.pyenv/shims/pip3'
+alias python3='$HOME/.pyenv/shims/python3'
+alias python='$HOME/.pyenv/shims/python3'
+alias pip3='$HOME/.pyenv/shims/pip3'
+alias pip='$HOME/.pyenv/shims/pip3'
 
 alias typora='open -a typora'
 alias preview='open -a preview'
@@ -241,7 +238,7 @@ export PATH="/usr/bin:$PATH"
 #   /usr/local/bin/exa --icons; echo -ne "\033]0;$(/bin/pwd | /usr/bin/rev | /usr/bin/awk -F \/ '{print "/"$1"/"$2}' | /usr/bin/rev )\007"
 # }
 
-alias luamake=/Users/cassin/build_space/lua-language-server/3rd/luamake/luamake
+alias luamake=$HOME/build_space/lua-language-server/3rd/luamake/luamake
 
 # skimで開いたpdfでcommand+shift+クリックでneovim上のtexファイルの該当行に移動
 alias nvimtex="NVIM_LISTEN_ADDRESS=/tmp/nvimsocket nvim"
@@ -256,28 +253,6 @@ function cdfi() {
     fi
 }
 
-function cdf() {
-  local path dir
-  path=$(/usr/bin/find . -maxdepth 3 | /usr/local/bin/fzf)
-  dir="$(/usr/bin/dirname "${path}")"
-  if [ -d "${path}" ]; then
-    cd "${path}" || exit
-  elif [ -d "${dir}" ]; then
-    cd "${dir}" || exit
-  fi
-}
-
-function cdm() {
-  local marker_list output
-  if marker_list=$(path-marker -- show); then
-    if output=$(echo "${marker_list}" | peco); then
-      cd "${output}" || exit
-    fi
-  fi
-}
-alias mp='path-marker -- mark'
-alias ms='path-marker -- show'
-
 # icloud driveに移動
 alias icloud='cd ~/Library/Mobile\ Documents/com~apple~CloudDocs'
 
@@ -289,7 +264,7 @@ alias teee='tee >(pbcopy)'
 # schemeスクリプトを実行
 function runscheme() {
   # $1: schemeスクリプトのパス(.scm)
-  scheme --quiet "$1"
+  scheme --quiet < "$1"
 }
 
 # GitHub CLI: {{{
@@ -303,8 +278,8 @@ function gh_start() {
     read -r repo_desc
     gh repo create "${repo_name}" --private -d "${repo_desc}"
     sleep 2
-    ghq get "${repo_name}"
-    cd $(ghq list --full-path -e "${repo_name}") || exit
+    ghq get "Cassin01/${repo_name}"
+    cd $(ghq list --full-path -e "Cassin01/${repo_name}") || exit
 }
 
 # Clone github repo
@@ -390,9 +365,19 @@ function gitu() {
     done
   }
   git commit -m "${res}"
-  git push origin main
+  local branch=$(git branch --show-current)
+  git push origin "${branch}"
 }
 # }}}
+
+# fzf color
+export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#d0d0d0,bg:#121212,hl:#5f87af --color=fg+:#d0d0d0,bg+:#262626,hl+:#5fd7ff --color=info:#afaf87,prompt:#d7005f,pointer:#af5fff --color=marker:#87ff00,spinner:#af5fff,header:#87afaf'
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/dotfiles/seacret/rc.sh ] && source ~/dotfiles/seacret/rc.sh
+[ -f ~/dotfiles/rc/init.sh ] && source ~/dotfiles/rc/init.sh
+[ -f ~/dotfiles/rc/z.sh ] && . ~/dotfiles/rc/z.sh
+
 
 # cd無しでもディレクトリ移動
 setopt auto_cd
@@ -406,12 +391,10 @@ setopt correct
 # 同じコマンドをhistoryに残さない
 setopt hist_ignore_all_dups
 
-export LUA_PATH='/usr/local/Cellar/luarocks/3.8.0/share/lua/5.4/?.lua;/usr/local/share/lua/5.4/?.lua;/usr/local/share/lua/5.4/?/init.lua;/usr/local/lib/lua/5.4/?.lua;/usr/local/lib/lua/5.4/?/init.lua;./?.lua;./?/init.lua;/Users/cassin/.luarocks/share/lua/5.4/?.lua;/Users/cassin/.luarocks/share/lua/5.4/?/init.lua'
-export LUA_CPATH='/usr/local/lib/lua/5.4/?.so;/usr/local/lib/lua/5.4/loadall.so;./?.so;/Users/cassin/.luarocks/lib/lua/5.4/?.so'
+export LUA_PATH='/usr/local/Cellar/luarocks/3.8.0/share/lua/5.4/?.lua;/usr/local/share/lua/5.4/?.lua;/usr/local/share/lua/5.4/?/init.lua;/usr/local/lib/lua/5.4/?.lua;/usr/local/lib/lua/5.4/?/init.lua;./?.lua;./?/init.lua;$HOME/.luarocks/share/lua/5.4/?.lua;$HOME/.luarocks/share/lua/5.4/?/init.lua'
+export LUA_CPATH='/usr/local/lib/lua/5.4/?.so;/usr/local/lib/lua/5.4/loadall.so;./?.so;$HOME/.luarocks/lib/lua/5.4/?.so'
 
-# export PATH='/Users/cassin/.luarocks/bin:/Users/cassin/.cargo/bin:/Users/cassin/.cabal/bin:/usr/local/sbin:/Users/cassin/.local/bin:/Users/cassin/.nodebrew/current/bin:/Library/TeX/texbin:/usr/local/opt/tcl-tk/bin:/Users/cassin/.pyenv/shims:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/Library/Apple/usr/bin:/Applications/Wireshark.app/Contents/MacOS:/Applications/kitty.app/Contents/MacOS:/Users/cassin/Library/Application Support/Coursier/bin:/Users/k1low/.cabal/bin:/usr/local/opt/fzf/bin'
-
-[ -f "/Users/cassin/.ghcup/env" ] && source "/Users/cassin/.ghcup/env" # ghcup-env
+[ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" # ghcup-env
 
 eval "$(starship init zsh)"
 
