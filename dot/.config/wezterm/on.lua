@@ -55,7 +55,7 @@ local function recompute_background_size(window)
     return conf
 end
 
-wezterm.on("window-resized", function(window, pane)
+wezterm.on("window-resized", function(window, _)
     recompute_background_size(window)
 end)
 

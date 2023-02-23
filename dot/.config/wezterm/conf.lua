@@ -1,6 +1,6 @@
 local wezterm = require("wezterm")
 local dimmer = { brightness = 0.1 }
-
+-- 画数の多い文字
 local config = {
     font = wezterm.font_with_fallback({
         -- #english
@@ -21,8 +21,9 @@ local config = {
     -- font_size = 18.0,
     -- font_size = 24.0,
 
-    -- window_background_opacity = 1.0, -- 0.7,
-    -- text_background_opacity = 1.0,
+    -- window_background_opacity = 0.0,
+    -- text_background_opacity = 0.6,
+    -- text_background_opacity = 0.6,
     -- window_background_image=os.getenv('HOME')..'/.config/nvim/data/wallpapers/c-o-champion-sona-mutemix-animated.gif',
     --
     -- background = {
@@ -51,9 +52,12 @@ local config = {
     -- },
 
     -- color_scheme = "kanagawabones",
-    color_scheme = "tokyonight-storm",
+    -- color_scheme = "tokyonight-storm",
+    -- color_scheme = "Black Metal (base16)",
+    -- color_scheme = "Swayr (terminal.sexy)",
     -- color_scheme = "tokyonight-day",
     -- color_scheme = "TokyoNightStorm (Gogh)",
+    color_scheme = "Catppuccin Mocha",
     -- color_scheme = 'iceberg-light',
 
     window_decorations = "RESIZE", -- disable the title bar but eneable the resizable border

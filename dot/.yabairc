@@ -1,5 +1,10 @@
 #!/usr/bin/env sh
 
+# MARGIN=20
+MARGIN=0
+# TOP=29
+TOP=0
+
 # global settings
 yabai -m config mouse_follows_focus          off
 yabai -m config focus_follows_mouse          off
@@ -25,10 +30,10 @@ yabai -m config mouse_drop_action            swap
 
 # general space settings
 yabai -m config layout                       bsp
-yabai -m config top_padding                  30 # 12
-yabai -m config bottom_padding               0
-yabai -m config left_padding                 0
-yabai -m config right_padding                0
-yabai -m config window_gap                   0
+yabai -m config top_padding                  $(($TOP + $MARGIN)) # 29 for uberscht, 31 for sketchybar
+yabai -m config bottom_padding               $MARGIN
+yabai -m config left_padding                 $MARGIN
+yabai -m config right_padding                $MARGIN
+yabai -m config window_gap                   $MARGIN
 
 echo "yabai configuration loaded.."

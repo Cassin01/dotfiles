@@ -13,3 +13,6 @@
     tra = tr --all
     gr  = !git-graph --style=round --color=always | ${GIT_PAGER:-less -R}
     ignore = "!gi() { curl -L -s https://www.gitignore.io/api/$@ >> .gitignore ;}; gi"
+[user]
+	name = Cassin01
+	email = koyojb@gmail.com

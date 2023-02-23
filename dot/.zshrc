@@ -284,7 +284,7 @@ function gh_start() {
 
 # Clone github repo
 function gh_clone() {
-  if local repo_name=$(gh repo list | awk '{print $1}' | peco); then
+  if local repo_name=$(gh repo list | awk '{print $1}' | fzf); then
     git clone "https://github.com/${repo_name}.git"
   else
     echo "error"
@@ -294,7 +294,7 @@ function gh_clone() {
 # Clone github repo
 function ghq_clone() {
   local repo_name
-  if repo_name=$(gh repo list | awk '{print $1}' | peco); then
+  if repo_name=$(gh repo list | awk '{print $1}' | fzf); then
     ghq get "${repo_name}"
     cd $(ghq list --full-path -e "${repo_name}") || exit
   else
@@ -312,7 +312,7 @@ function gh_cleate() {
 # Press Ctrl- to display the list of repositories and go to the selected repository.
 function ghq_src() {
     local repo
-    repo=$(ghq list | peco --query "$LBUFFER")
+    repo=$(ghq list | fzf --query "$LBUFFER")
     if [ -n "${repo}" ]; then
       repo=$(ghq list --full-path -e "${repo}")
       BUFFER="cd ${repo}"
@@ -360,7 +360,8 @@ function gitu() {
   local res="update: "
   git status -s | awk '/ M / { print $2 }' | {
     while read line; do
-      res="${res}${line}"
+      local file_name="$(basename "${line}")"
+      res="${res}${file_name}, "
       git add "${line}"
     done
   }

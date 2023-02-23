@@ -26,7 +26,6 @@
 "diff.delta" = { fg = "orange" }
 "diff.minus" = { fg = "red" }
 
-# "ui.background" = { fg = "foreground", bg = "background" }
 "ui.background" = { fg = "foreground" }
 "ui.cursor" = { modifiers = ["reversed"] }
 "ui.cursor.match" = { fg = "orange", modifiers = ["bold"] }
@@ -35,13 +34,13 @@
 "ui.help" = { fg = "foreground", bg = "background_menu" }
 "ui.linenr" = { fg = "foreground_gutter" }
 "ui.linenr.selected" = { fg = "foreground" }
-"ui.menu" = { fg = "foreground", bg = "background_menu" }
+"ui.menu" = { fg = "foreground" }
 "ui.menu.selected" = { bg = "background_highlight" }
-"ui.popup" = { fg = "foreground", bg = "background_menu" }
+"ui.popup" = { fg = "foreground" }
 "ui.selection" = { bg = "background_highlight" }
 "ui.selection.primary" = { bg = "background_highlight" }
-"ui.statusline" = { fg = "foreground", bg = "background_menu" }
-"ui.statusline.inactive" = { fg = "foreground_gutter", bg = "background_menu" }
+"ui.statusline" = { fg = "foreground" }
+"ui.statusline.inactive" = { fg = "foreground_gutter" }
 "ui.text" = { fg = "foreground" }
 "ui.text.focus" = { fg = "cyan" }
 "ui.virtual.ruler" = { bg = "foreground_gutter" }
