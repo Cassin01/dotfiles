@@ -316,7 +316,8 @@ function ghq_src() {
     if [ -n "${repo}" ]; then
       repo=$(ghq list --full-path -e "${repo}")
       BUFFER="cd ${repo}"
-      zle accpet-line
+      # zle accpet-line
+      zle end-of-line
     fi
     zle clear-screen
 }
