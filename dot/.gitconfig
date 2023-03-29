@@ -1,18 +1,19 @@
 [alias]
-    sw  = switch
-    co  = checkout
-    ci  = commit -a
-    ame = commit --amend
-    amn = commit --amend --no-edit
-    st  = status --short --branch
-    br  = branch
-    ba  = branch -a
-    dc  = diff --cached
-    ln  = log --name-only
-    tr  = log --graph --pretty=tree --abbrev-commit --date=short
-    tra = tr --all
-    gr  = !git-graph --style=round --color=always | ${GIT_PAGER:-less -R}
-    ignore = "!gi() { curl -L -s https://www.gitignore.io/api/$@ >> .gitignore ;}; gi"
+	sw  = switch
+	co  = checkout
+	ci  = commit -a
+	ame = commit --amend
+	amn = commit --amend --no-edit
+	st  = status --short --branch
+	br  = branch
+	ba  = branch -a
+	dc  = diff --cached
+	ln  = log --name-only
+	tr  = log --graph --pretty=tree --abbrev-commit --date=short
+	tra = tr --all
+	gr  = !git-graph --style=round --color=always | ${GIT_PAGER:-less -R}
+	ignore = "!gi() { curl -L -s https://www.gitignore.io/api/$@ >> .gitignore ;}; gi"
+	tree = log --graph --decorate --pretty=oneline --abbrev-commit
 [user]
 	name = Cassin01
 	email = koyojb@gmail.com
