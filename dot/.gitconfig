@@ -17,3 +17,5 @@
 [user]
 	name = Cassin01
 	email = koyojb@gmail.com
+[merge]
+	ff = false
