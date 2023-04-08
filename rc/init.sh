@@ -7,7 +7,7 @@
 
 # Greatest common divisor
 function gcd_() {
-    if [ $# -ne 2 ]; then 
+    if [ $# -ne 2 ]; then
       echo "Usage: gcd <number1> <number2>" 1>&2
       exit 1
     fi
@@ -70,3 +70,32 @@ function cdm() {
 }
 alias mp='path-marker -- mark'
 alias ms='path-marker -- show'
+
+# mkdir with cd
+function mkcd() {
+  if [ $# -ne 1 ]; then
+    echo "Usage: mkcd <dirname>" 1>&2
+    exit 1
+  fi
+  local dir="$1"
+  mkdir -p "${dir}" && cd "${dir}" || exit
+}
+
+
+# ファイル作成
+# ────────────────────────────────────────────────────────────
+
+
+# date
+alias da='date +%Y-%m-%d'
+function nvd() {
+  local _date
+  _date=$(date +%Y-%m-%d)
+  if [ -z "$_date"  ] ; then
+    return 1
+  fi
+  echo "Enter file extension:"
+  read -r f_extension
+  nvim "${_date}.${f_extension}"
+}
+
