@@ -110,6 +110,10 @@ function md2pdf() {
 }
 
 
+# ファイル暗号化
+# ────────────────────────────────────────────────────────────
+
+
 # encrypt
 function encrypt() {
   if [ $# -ne 1 ]; then
@@ -140,4 +144,31 @@ function decrypt() {
   # -salt : saltを使用
   read -r password
   openssl enc -d -aes-256-cbc -salt -k "${password}" -in "${ciphertext}" -out "${ciphertext}.dec"
+}
+
+
+# check if current directory is not behind from remote repository
+# ────────────────────────────────────────────────────────────
+
+
+function behind() {
+  local current_branch
+  local remote_branch
+  local count
+  git fetch
+  current_branch="$(git branch --show-current)"
+  remote_branch="$(git --no-pager branch -r | tail -n 1 | sed 's/^  //')"
+
+  count="$(git rev-list --count ^"${current_branch}" "${remote_branch}")"
+  if [ "${count}" -gt 0 ]; then
+    echo "behind ${count} commits from origin/main"
+  fi
+}
+
+
+function cd() {
+  builtin cd "$@" && exa --icons -a
+  if [ -d .git ]; then
+    behind
+  fi
 }
