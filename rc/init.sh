@@ -99,3 +99,45 @@ function nvd() {
   nvim "${_date}.${f_extension}"
 }
 
+# markdown to pdf
+function md2pdf() {
+  if [ $# -ne 1 ]; then
+    echo "Usage: md2pdf <filename>" 1>&2
+    exit 1
+  fi
+  local file="$1"
+  pandoc "${file}".md -o "${file}".pdf -V documentclass=ltjarticle --pdf-engine=lualatex
+}
+
+
+# encrypt
+function encrypt() {
+  if [ $# -ne 1 ]; then
+    echo "Usage: encrypt <file name of plaintext>" 1>&2
+    exit 1
+  fi
+  local plaintext="$1"
+  # local ciphertext="$2"
+  echo "Enter password:"
+  # -e : 暗号化
+  # -aes-256-cbc : AES256をCBCモードで暗号化
+  # -salt : saltを使用
+  read -r password
+  openssl enc -e -aes-256-cbc -salt -k "${password}" -in "${plaintext}" -out "${plaintext}.enc"
+}
+
+# decrypt
+function decrypt() {
+  if [ $# -ne 1 ]; then
+    echo "Usage: decrypt <file name of ciphertext>" 1>&2
+    exit 1
+  fi
+  local ciphertext="$1"
+  # local plaintext="$2"
+  echo "Enter password:"
+  # -d : 復号化
+  # -aes-256-cbc : AES256をCBCモードで暗号化
+  # -salt : saltを使用
+  read -r password
+  openssl enc -d -aes-256-cbc -salt -k "${password}" -in "${ciphertext}" -out "${ciphertext}.dec"
+}
