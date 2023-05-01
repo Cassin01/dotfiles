@@ -157,18 +157,17 @@ function behind() {
   local count
   git fetch
   current_branch="$(git branch --show-current)"
-  remote_branch="$(git --no-pager branch -r | tail -n 1 | sed 's/^  //')"
-
+  # remote_branch="$(git --no-pager branch -r | tail -n 1 | sed 's/^  //')"
+  remote_branch="origin/main"
   count="$(git rev-list --count ^"${current_branch}" "${remote_branch}")"
   if [ "${count}" -gt 0 ]; then
-    echo "behind ${count} commits from origin/main"
+    echo "behind ${count} commits from ${remote_branch}" 1>&2
   fi
 }
-
 
 function cd() {
   builtin cd "$@" && exa --icons -a
   if [ -d .git ]; then
-    behind
+    (behind &) > /dev/null
   fi
 }
