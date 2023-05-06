@@ -148,7 +148,7 @@ alias lab='cd ~/2022/lab'
 alias project='cd ~/all_year'
 alias org='cd ~/org'
 
-alias c='cargo'
+# alias c='cargo'
 alias nconf='~/.config/nvim/init'
 
 alias ls='exa --icons'
@@ -157,8 +157,13 @@ alias la='exa --icons -a'
 
 # alias nv='nvim'
 alias nvf='nvim $(fzf --height 40% --reverse --border)'
-alias nvim='/usr/local/Cellar/neovim/HEAD-e336251/bin/nvim'
-alias nv='/usr/local/Cellar/neovim/HEAD-e336251/bin/nvim'
+alias nvim='/usr/local/Cellar/neovim/0.9.0/bin/nvim'
+alias nv='/usr/local/Cellar/neovim/0.9.0/bin/nvim'
+# alias nvim='/usr/local/Cellar/neovim/HEAD-e336251/bin/nvim'
+# alias nv='/usr/local/Cellar/neovim/HEAD-e336251/bin/nvim'
+
+# vusted(test runner for neovim)
+#
 
 
 # nvr(neovim plugin)
