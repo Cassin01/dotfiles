@@ -69,12 +69,19 @@ local config = {
     },
 
     tab_bar_at_bottom = true,
-    enable_tab_bar = false,
+    enable_tab_bar = true,
     -- hide_tab_bar_if_only_one_tab = true,
+    check_for_updates = false,
+    check_for_updates_interval_seconds = 86400,
 
     -- disable_default_key_bindings = true,
     leader = { key = "\\", mods = "CTRL", timeout_milliseconds = 1000 },
     keys = {
+        {
+            key = "-",
+            mods = "LEADER",
+            action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }),
+        },
         {
             key = "|",
             mods = "LEADER|SHIFT",
@@ -89,6 +96,16 @@ local config = {
             key = "n",
             mods = "CMD|SHIFT",
             action = wezterm.action.ToggleFullScreen,
+        },
+        {
+            key = "a",
+            mods = "CMD",
+            action = wezterm.action.EmitEvent 'change-color-scheme',
+        },
+        {
+            key = "s",
+            mods = "CMD",
+            action = wezterm.action.ShowDebugOverlay,
         },
         -- { key = 'Return', action = wezterm.action.SendString '\x0D'},
         -- { key = 'm', mods='CTRL', action = wezterm.action.SendString '\x1b[109;5u' },

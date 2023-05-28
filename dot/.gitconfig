@@ -18,6 +18,8 @@
 	name = Cassin01
 	email = koyojb@gmail.com
 [merge]
+	; mergeされたときもcommitする (git merge --no-ff)
 	ff = false
 [pull]
+	; pull されたときはコミットしない。
 	ff = only
