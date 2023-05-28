@@ -4,7 +4,6 @@
 # 数学
 # ────────────────────────────────────────────────────────────
 
-
 # Greatest common divisor
 function gcd_() {
     if [ $# -ne 2 ]; then
@@ -85,7 +84,6 @@ function mkcd() {
 # ファイル作成
 # ────────────────────────────────────────────────────────────
 
-
 # date
 alias da='date +%Y-%m-%d'
 function nvd() {
@@ -112,7 +110,6 @@ function md2pdf() {
 
 # ファイル暗号化
 # ────────────────────────────────────────────────────────────
-
 
 # encrypt
 function encrypt() {
@@ -150,8 +147,7 @@ function decrypt() {
 # check if current directory is not behind from remote repository
 # ────────────────────────────────────────────────────────────
 
-
-function behind() {
+function _behind() {
   local current_branch
   local remote_branch
   local count
@@ -165,9 +161,9 @@ function behind() {
   fi
 }
 
-function cd() {
+function c() {
   builtin cd "$@" && exa --icons -a
   if [ -d .git ]; then
-    (behind &) > /dev/null
+    (_behind &) > /dev/null
   fi
 }
