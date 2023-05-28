@@ -1,4 +1,4 @@
-# How to link files
+How to link files
 
 ```zsh
 sh ./link.sh
