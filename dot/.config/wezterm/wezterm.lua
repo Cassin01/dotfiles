@@ -27,6 +27,22 @@ wezterm.on("set-color-scheme", function(window, pane)
     window:set_config_overrides(overrides)
 end)
 
+local function get_color_scheme(scheme_name, component)
+    local scheme = wezterm.get_builtin_color_schemes()[scheme_name]
+    print(scheme)
+    return scheme and scheme[component]
+end
+
+local conf = require("conf")
+
+wezterm.on('update-right-status', function(window, _)
+    local date = wezterm.strftime("%H:%M")
+    window:set_right_status(wezterm.format({
+        -- { Foreground = { Color = get_color_scheme(conf["color_scheme"], "foreground") } },
+        { Text = date .. "   "},
+    }))
+end)
+
 -- wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
 --     wezterm.log_info("format-tab-title: ", tab.tab_id)
 --     local window = wezterm.mux.get_window(tab.window_id)
@@ -35,4 +51,5 @@ end)
 --     -- wezterm.log_info("res", res)
 -- end)
 
-return require("conf")
+return conf
+

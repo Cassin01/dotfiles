@@ -1,5 +1,20 @@
 local wezterm = require("wezterm")
-local dimmer = { brightness = 0.1 }
+local dimmer = {
+    -- brightness = 0.1
+    brightness = 1
+}
+
+-- 日中はopacityを下げてみる
+local opacity = (function()
+    local h = tonumber(os.date("%H"))
+    if h >= 6 and h <= 16 then
+        return 0.8
+    else
+        return 0.6
+    end
+end)()
+opacity = 0.6
+
 -- 画数の多い文字
 local config = {
     font = wezterm.font_with_fallback({
@@ -21,8 +36,9 @@ local config = {
     -- font_size = 18.0,
     -- font_size = 24.0,
 
-    -- window_background_opacity = 0.0,
-    -- text_background_opacity = 0.6,
+    window_background_opacity = opacity,
+    text_background_opacity = opacity,
+    macos_window_background_blur = 15,
     -- text_background_opacity = 0.6,
     -- window_background_image=os.getenv('HOME')..'/.config/nvim/data/wallpapers/c-o-champion-sona-mutemix-animated.gif',
     --
@@ -51,14 +67,23 @@ local config = {
     --     -- saturation = 1.0,
     -- },
 
-    -- color_scheme = "kanagawabones",
+    --color_scheme = "kanagawabones",
     -- color_scheme = "tokyonight-storm",
+    -- color_scheme = "Grape",
     -- color_scheme = "Black Metal (base16)",
     -- color_scheme = "Swayr (terminal.sexy)",
     -- color_scheme = "tokyonight-day",
     -- color_scheme = "TokyoNightStorm (Gogh)",
-    color_scheme = "Catppuccin Mocha",
+    -- color_scheme = "Catppuccin Mocha",
     -- color_scheme = 'iceberg-light',
+    -- color_scheme = 'Konsolas',
+    -- color_scheme = "Teerb", -- 淡い
+    -- color_scheme = "terafox", -- 濃い [お気に入り]
+    -- color_scheme = "Tinacious Design (Light)",
+    ---- for daylight
+    -- color_scheme = 'Kolorit',
+    -- color_scheme = 'Heetch Light (base16)',
+    color_scheme = "Nova (base16)",
 
     window_decorations = "RESIZE", -- disable the title bar but eneable the resizable border
     window_padding = {
@@ -68,7 +93,9 @@ local config = {
         bottom = 0,
     },
 
+    use_fancy_tab_bar = true,
     tab_bar_at_bottom = true,
+    hide_tab_bar_if_only_one_tab = true,
     enable_tab_bar = true,
     -- hide_tab_bar_if_only_one_tab = true,
     check_for_updates = false,
@@ -89,17 +116,20 @@ local config = {
         },
         {
             key = "r",
-            mods = "CMD|SHIFT",
+            mods = "LEADER",
+            -- mods = "CMD|SHIFT",
             action = wezterm.action.ReloadConfiguration,
         },
         {
             key = "n",
-            mods = "CMD|SHIFT",
+            mods = "LEADER",
+            -- mods = "CMD|SHIFT",
             action = wezterm.action.ToggleFullScreen,
         },
         {
             key = "a",
-            mods = "CMD",
+            mods = "LEADER",
+            -- mods = "CMD|SHIFT",
             action = wezterm.action.EmitEvent 'change-color-scheme',
         },
         {
@@ -121,6 +151,10 @@ local config = {
 
         { key = "i", mods = "CTRL", action = wezterm.action.SendString("\x1b[105;5u") },
         -- { key = 'm', mods='CTRL', action = wezterm.action.SendString '\x1b[109;5u' },
+    },
+    colors = {
+        -- split = '#149414',
+        background = "#1c2131",
     },
 }
 
