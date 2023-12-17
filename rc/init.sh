@@ -161,9 +161,49 @@ function _behind() {
   fi
 }
 
+function _c() {
+  if [ $# -ne 1 ]; then
+    echo "Usage: _c <directory name>" 1>&2
+  else
+    typeset -A assoc_array
+    assoc_array=(all_year ~/all_year dotfile ~/dotfile org ~/org conf ~/.config/nvim memo ~/tech-memo dot ~/dotfiles/dot wez ~/.config/wezterm)
+    for k in "${(@k)assoc_array}"; do
+      if [ "$1" = "${k}" ]; then
+        builtin cd "${assoc_array[$k]}" && exa --icons -a
+        return 0
+        # break
+      fi
+    done
+    echo "No such alias" 1>&2
+  fi
+}
+
 function c() {
+  # _c "$@" &> /dev/null
+  # if [ $? -ne 0 ]; then
   builtin cd "$@" && exa --icons -a
   if [ -d .git ]; then
     (_behind &) > /dev/null
   fi
+  # fi
+}
+
+
+# check if current directory is not behind from remote repository
+# ────────────────────────────────────────────────────────────
+
+function gitu() {
+  local res="update: "
+  git status -s | awk '/ M / { print $2 }' | {
+    while read line; do
+      local file_name
+      file_name="$(basename "${line}")"
+      res="${res}${file_name}, "
+      git add "${line}"
+    done
+  }
+  git commit -m "${res}"
+  local branch
+  branch=$(git branch --show-current)
+  git push origin "${branch}"
 }
