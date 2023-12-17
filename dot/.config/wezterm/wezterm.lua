@@ -27,13 +27,62 @@ wezterm.on("set-color-scheme", function(window, pane)
     window:set_config_overrides(overrides)
 end)
 
-local function get_color_scheme(scheme_name, component)
-    local scheme = wezterm.get_builtin_color_schemes()[scheme_name]
-    print(scheme)
-    return scheme and scheme[component]
+local conf = require("conf")
+
+local function statusbar(conf)
+    local scheme = wezterm.get_builtin_color_schemes()[conf["color_scheme"] or "Nova (base16)"]
+    local bg = "#1c2131"
+    local fg = scheme["foreground"]
+    local sleep_fg = '#6c7693'
+    local awake_bg = '#22283a'
+    conf["colors"]["tab_bar"] = {
+        background = bg,
+        foreground = fg,
+        active_tab = {
+            bg_color = bg,
+            fg_color = fg
+        },
+        inactive_tab = {
+            bg_color = bg,
+            fg_color = sleep_fg
+        },
+        new_tab = {
+            bg_color = bg,
+            fg_color = fg,
+        },
+    }
+    conf["window_frame"] = {
+        inactive_titlebar_bg = bg,
+        active_titlebar_bg = bg,
+    }
+    return conf
 end
 
-local conf = require("conf")
+wezterm.on("toggle-blur", function(window, _)
+    local overrides = window:get_config_overrides() or {}
+    local blur = conf["macos_window_background_blur"] or 15
+    if overrides.macos_window_background_blur == blur then
+        overrides.macos_window_background_blur = 0
+    else
+        overrides.macos_window_background_blur = blur
+    end
+    window:set_config_overrides(overrides)
+end)
+
+wezterm.on("toggle-tabbar", function(window, _)
+    local overrides = window:get_config_overrides() or {}
+    if overrides.enable_tab_bar then
+        overrides.enable_tab_bar = false
+    else
+        overrides.enable_tab_bar = true
+    end
+    window:set_config_overrides(overrides)
+end)
+
+local function get_color_scheme(scheme_name, component)
+    local scheme = wezterm.get_builtin_color_schemes()[scheme_name]
+    return scheme and scheme[component]
+end
 
 wezterm.on('update-right-status', function(window, _)
     local date = wezterm.strftime("%H:%M")
@@ -51,5 +100,6 @@ end)
 --     -- wezterm.log_info("res", res)
 -- end)
 
+conf = statusbar(conf)
 return conf
 

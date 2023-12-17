@@ -7,13 +7,14 @@ local dimmer = {
 -- 日中はopacityを下げてみる
 local opacity = (function()
     local h = tonumber(os.date("%H"))
-    if h >= 6 and h <= 16 then
+    print(h)
+    if h >= 6 and h < 13 then
         return 0.8
     else
         return 0.6
     end
 end)()
-opacity = 0.6
+-- opacity = 0.6
 
 -- 画数の多い文字
 local config = {
@@ -38,7 +39,7 @@ local config = {
 
     window_background_opacity = opacity,
     text_background_opacity = opacity,
-    macos_window_background_blur = 15,
+    macos_window_background_blur = 10,
     -- text_background_opacity = 0.6,
     -- window_background_image=os.getenv('HOME')..'/.config/nvim/data/wallpapers/c-o-champion-sona-mutemix-animated.gif',
     --
@@ -97,7 +98,6 @@ local config = {
     tab_bar_at_bottom = true,
     hide_tab_bar_if_only_one_tab = true,
     enable_tab_bar = true,
-    -- hide_tab_bar_if_only_one_tab = true,
     check_for_updates = false,
     check_for_updates_interval_seconds = 86400,
 
@@ -131,6 +131,18 @@ local config = {
             mods = "LEADER",
             -- mods = "CMD|SHIFT",
             action = wezterm.action.EmitEvent 'change-color-scheme',
+        },
+        {
+            key = "b",
+            mods = "LEADER",
+            -- mods = "CMD|SHIFT",
+            action = wezterm.action.EmitEvent 'toggle-blur',
+        },
+        {
+            key = "t",
+            mods = "LEADER",
+            -- mods = "CMD|SHIFT",
+            action = wezterm.action.EmitEvent 'toggle-tabbar',
         },
         {
             key = "s",
