@@ -89,12 +89,16 @@ alias da='date +%Y-%m-%d'
 function nvd() {
   local _date
   _date=$(date +%Y-%m-%d)
-  if [ -z "$_date"  ] ; then
+  if [ -z "${_date}"  ] ; then
     return 1
   fi
-  echo "Enter file extension:"
-  read -r f_extension
-  nvim "${_date}.${f_extension}"
+  echo "Directory or file? [d/f] "
+  read -r dn
+  case $dn in
+    [Dd]* ) mkdir "./${_date}"; return 0;;
+    [Ff]* ) echo "Enter file extension:"; read -r f_extension; nvim "${_date}.${f_extension}"; return 0;;
+    * ) echo "Please answer d or f.";;
+  esac
 }
 
 # markdown to pdf
@@ -166,7 +170,7 @@ function _c() {
     echo "Usage: _c <directory name>" 1>&2
   else
     typeset -A assoc_array
-    assoc_array=(all_year ~/all_year dotfile ~/dotfile org ~/org conf ~/.config/nvim memo ~/tech-memo dot ~/dotfiles/dot wez ~/.config/wezterm)
+    assoc_array=(all_year ~/all_year dotfile ~/dotfile org ~/org conf ~/.config/nvim memo ~/tech-memo dot ~/dotfiles/dot wez ~/dotfiles/dot/.config/wezterm)
     for k in "${(@k)assoc_array}"; do
       if [ "$1" = "${k}" ]; then
         builtin cd "${assoc_array[$k]}" && exa --icons -a
