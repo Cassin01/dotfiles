@@ -1,4 +1,5 @@
 local wezterm = require("wezterm")
+local act = wezterm.action
 local dimmer = {
     -- brightness = 0.1
     brightness = 1
@@ -14,7 +15,7 @@ local opacity = (function()
         return 0.6
     end
 end)()
--- opacity = 0.6
+opacity = 0.6
 
 -- 画数の多い文字
 local config = {
@@ -26,8 +27,8 @@ local config = {
         -- #ligature
         -- "Lilex",
         -- "JetBrains Mono",
-        "PlemolJP Console",
-        -- "Hack Nerd Font",
+        -- "PlemolJP Console",
+        "Hack Nerd Font",
 
         -- #japanese
         -- "Hachi Maru Pop",
@@ -129,20 +130,42 @@ local config = {
         {
             key = "a",
             mods = "LEADER",
-            -- mods = "CMD|SHIFT",
             action = wezterm.action.EmitEvent 'change-color-scheme',
         },
         {
             key = "b",
             mods = "LEADER",
-            -- mods = "CMD|SHIFT",
             action = wezterm.action.EmitEvent 'toggle-blur',
         },
+        -- {
+        --     key = "o",
+        --     mods = "LEADER",
+        --     action = wezterm.action.EmitEvent 'toggle-opacity',
+        -- },
         {
             key = "t",
             mods = "LEADER",
-            -- mods = "CMD|SHIFT",
             action = wezterm.action.EmitEvent 'toggle-tabbar',
+        },
+        {
+            key = "h",
+            mods = "LEADER",
+            action = act.ActivatePaneDirection 'Left',
+        },
+        {
+            key = "l",
+            mods = "LEADER",
+            action = act.ActivatePaneDirection 'Right',
+        },
+        {
+            key = "k",
+            mods = "LEADER",
+            action = act.ActivatePaneDirection 'Up',
+        },
+        {
+            key = "j",
+            mods = "LEADER",
+            action = act.ActivatePaneDirection 'Down',
         },
         {
             key = "s",

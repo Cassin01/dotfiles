@@ -115,15 +115,18 @@ export PATH="$PATH:/Users/k1low/.cabal/bin"
 export PATH="/usr/local/opt/openssl@3/bin:$PATH"
 export PKG_CONFIG_PATH="/usr/local/opt/openssl@3/lib/pkgconfig"
 
-# Set Spaceship ZSH as a prompt
-autoload -U promptinit; promptinit
-prompt spaceship
+# # Set Spaceship ZSH as a prompt
+# autoload -U promptinit; promptinit
+# prompt spaceship
 
 # Macのgcc, g++をHomebrewを使って最新版にする
 export PATH="$PATH:/usr/local/bin"
 
 # nodebrewのパス
-export PATH="$HOME/.nodebrew/current/bin:$PATH"
+export PATH="${HOME}/.nodebrew/current/bin:${PATH}"
+
+# luarocksのパス
+export PATH="${PATH}:${HOME}/.luarocks/bin"
 
 # # ncurses
 # export PATH="/usr/local/opt/ncurses/bin:$PATH"
@@ -151,14 +154,14 @@ alias org='cd ~/org'
 # alias c='cargo'
 alias nconf='~/.config/nvim/init'
 
-alias ls='exa --icons'
-alias ll='exa --icons -l'
-alias la='exa --icons -a'
+alias ls='eza --icons'
+alias ll='eza --icons -l'
+alias la='eza --icons -a'
 
 # alias nv='nvim'
 alias nvf='nvim $(fzf --height 40% --reverse --border)'
-alias nvim='/usr/local/Cellar/neovim/0.9.0/bin/nvim'
-alias nv='/usr/local/Cellar/neovim/0.9.0/bin/nvim'
+alias nvim='/usr/local/Cellar/neovim/0.9.4/bin/nvim'
+alias nv='/usr/local/Cellar/neovim/0.9.4/bin/nvim'
 # alias nvim='/usr/local/Cellar/neovim/HEAD-e336251/bin/nvim'
 # alias nv='/usr/local/Cellar/neovim/HEAD-e336251/bin/nvim'
 
@@ -314,7 +317,7 @@ function gh_cleate() {
     gh repo create "${repo_name}" --private --push --source ./
 }
 
-# Press Ctrl- to display the list of repositories and go to the selected repository.
+# Press Ctrl-] to display the list of repositories and go to the selected repository.
 function ghq_src() {
     local repo
     repo=$(ghq list | fzf --query "$LBUFFER")
@@ -360,20 +363,6 @@ function gitz() {
   else
     echo "Err: failed to generate a commit message"
   fi
-}
-
-function gitu() {
-  local res="update: "
-  git status -s | awk '/ M / { print $2 }' | {
-    while read line; do
-      local file_name="$(basename "${line}")"
-      res="${res}${file_name}, "
-      git add "${line}"
-    done
-  }
-  git commit -m "${res}"
-  local branch=$(git branch --show-current)
-  git push origin "${branch}"
 }
 # }}}
 

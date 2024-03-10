@@ -1,10 +1,10 @@
-How to link files
+## How to link files
 
 ```zsh
 sh ./link.sh
 ```
 
-The configurations that are not stored on this repository.
+## The configurations that are not stored on this repository.
 
 - [Neovim](https://github.com/Cassin01/nvim-conf)
 - [SpaceVim](https://github.com/Cassin01/.SpaceVim.d)

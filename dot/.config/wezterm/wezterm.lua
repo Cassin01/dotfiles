@@ -5,6 +5,7 @@ local schemes = {
     "tokyonight-day",
     "tokyonight-night",
     "Batman",
+    "Nova (base16)"
 }
 
 local function pick_color_scheme_randomly()
@@ -37,7 +38,7 @@ local function statusbar(conf)
     local awake_bg = '#22283a'
     conf["colors"]["tab_bar"] = {
         background = bg,
-        foreground = fg,
+        -- foreground = fg,
         active_tab = {
             bg_color = bg,
             fg_color = fg
@@ -65,6 +66,20 @@ wezterm.on("toggle-blur", function(window, _)
         overrides.macos_window_background_blur = 0
     else
         overrides.macos_window_background_blur = blur
+    end
+    window:set_config_overrides(overrides)
+end)
+
+wezterm.on("toggle-opacity", function(window, _)
+    local overrides = window:get_config_overrides() or {}
+    local opacity_ = conf["text_background_opacity"]
+    local opacity = 0.6
+    if opacity_ > 0.1 then
+        overrides.window_background_opacity = 0.1
+        overrides.text_background_opacity = 0.1
+    else
+        overrides.window_background_opacity = opacity
+        overrides.text_background_opacity = opacity
     end
     window:set_config_overrides(overrides)
 end)

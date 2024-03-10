@@ -173,7 +173,7 @@ function _c() {
     assoc_array=(all_year ~/all_year dotfile ~/dotfile org ~/org conf ~/.config/nvim memo ~/tech-memo dot ~/dotfiles/dot wez ~/dotfiles/dot/.config/wezterm)
     for k in "${(@k)assoc_array}"; do
       if [ "$1" = "${k}" ]; then
-        builtin cd "${assoc_array[$k]}" && exa --icons -a
+        builtin cd "${assoc_array[$k]}" && eza --icons -a
         return 0
         # break
       fi
@@ -185,7 +185,7 @@ function _c() {
 function c() {
   # _c "$@" &> /dev/null
   # if [ $? -ne 0 ]; then
-  builtin cd "$@" && exa --icons -a
+  builtin cd "$@" && eza --icons -a
   if [ -d .git ]; then
     (_behind &) > /dev/null
   fi

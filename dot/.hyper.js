@@ -5,7 +5,7 @@
 module.exports = {
     config: {
         // plugin settings {{{
-        opacity: 0.85,
+        opacity: 0.6,
         // }}}
 
         // choose either `'stable'` for receiving highly polished,
