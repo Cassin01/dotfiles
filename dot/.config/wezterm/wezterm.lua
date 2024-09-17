@@ -1,4 +1,5 @@
 local wezterm = require("wezterm")
+local conf = require("conf")
 math.randomseed(os.time())
 local schemes = {
     "tokyonight-storm",
@@ -28,11 +29,10 @@ wezterm.on("set-color-scheme", function(window, pane)
     window:set_config_overrides(overrides)
 end)
 
-local conf = require("conf")
-
 local function statusbar(conf)
     local scheme = wezterm.get_builtin_color_schemes()[conf["color_scheme"] or "Nova (base16)"]
-    local bg = "#1c2131"
+    -- local bg = "#1c2131"
+    local bg = "#262335"
     local fg = scheme["foreground"]
     local sleep_fg = '#6c7693'
     local awake_bg = '#22283a'
@@ -115,6 +115,36 @@ end)
 --     -- wezterm.log_info("res", res)
 -- end)
 
+local function transition(conf)
+    local trangist = (function()
+        local h = tonumber(os.date("%H"))
+        -- 日中はopacityを下げてみる
+        if h >= 6 and h < 13 then
+            local opacity = 0.8
+            return {
+    window_background_opacity = opacity,
+    text_background_opacity = opacity,
+                color_scheme = 'Heetch Light (base16)',
+            }
+        else
+            local opacity = 0.6
+            return {
+                window_background_opacity = opacity,
+                text_background_opacity = opacity,
+                color_scheme = "Nova (base16)",
+                colors = {
+                    background = "#1c2131",
+                },
+            }
+        end
+    end)()
+    for k, v in pairs(trangist) do
+        conf[k] = v
+    end
+    return conf
+end
+
+-- conf = transition(conf)
 conf = statusbar(conf)
 return conf
 

@@ -8,14 +8,14 @@ local dimmer = {
 -- 日中はopacityを下げてみる
 local opacity = (function()
     local h = tonumber(os.date("%H"))
-    print(h)
     if h >= 6 and h < 13 then
         return 0.8
     else
         return 0.6
     end
 end)()
-opacity = 0.6
+opacity=1
+-- opacity=0.8
 
 -- 画数の多い文字
 local config = {
@@ -40,7 +40,7 @@ local config = {
 
     window_background_opacity = opacity,
     text_background_opacity = opacity,
-    macos_window_background_blur = 10,
+    macos_window_background_blur = 2, -- 15,
     -- text_background_opacity = 0.6,
     -- window_background_image=os.getenv('HOME')..'/.config/nvim/data/wallpapers/c-o-champion-sona-mutemix-animated.gif',
     --
@@ -85,7 +85,7 @@ local config = {
     ---- for daylight
     -- color_scheme = 'Kolorit',
     -- color_scheme = 'Heetch Light (base16)',
-    color_scheme = "Nova (base16)",
+    color_scheme = "Nova (base16)", -- default
 
     window_decorations = "RESIZE", -- disable the title bar but eneable the resizable border
     window_padding = {
@@ -96,7 +96,7 @@ local config = {
     },
 
     use_fancy_tab_bar = true,
-    tab_bar_at_bottom = true,
+    tab_bar_at_bottom = false,
     hide_tab_bar_if_only_one_tab = true,
     enable_tab_bar = true,
     check_for_updates = false,
@@ -189,7 +189,8 @@ local config = {
     },
     colors = {
         -- split = '#149414',
-        background = "#1c2131",
+        -- background = "#1c2131", -- for nova
+        background = "#262335", -- for fluormachine
     },
 }
 
