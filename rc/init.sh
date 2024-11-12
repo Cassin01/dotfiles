@@ -32,6 +32,13 @@ function ratio_() {
     echo "$((a / gcd)):$((b / gcd))"
 }
 
+# コマンド検索
+# ────────────────────────────────────────────────────────────
+
+# hisf
+function hisf() {
+  history | tac | fzf | cut -d " " -f3- | pbcopy
+}
 
 # ディレクトリ移動
 # ────────────────────────────────────────────────────────────
@@ -170,7 +177,13 @@ function _c() {
     echo "Usage: _c <directory name>" 1>&2
   else
     typeset -A assoc_array
-    assoc_array=(all_year ~/all_year dotfile ~/dotfile org ~/org conf ~/.config/nvim memo ~/tech-memo dot ~/dotfiles/dot wez ~/dotfiles/dot/.config/wezterm)
+    assoc_array=([all_year]="${HOME}/all_year" \
+      [dotfile]="${HOME}/dotfile" \
+      [org]="${HOME}/org" \
+      [conf]="${HOME}/.config/nvim" \
+      [memo]="${HOME}/tech-memo" \
+      [dot]="${HOME}/dotfiles/dot" \
+      [wez]="${HOME}/dotfiles/dot/.config/wezterm")
     for k in "${(@k)assoc_array}"; do
       if [ "$1" = "${k}" ]; then
         builtin cd "${assoc_array[$k]}" && eza --icons -a
@@ -198,14 +211,12 @@ function c() {
 
 function gitu() {
   local res="update: "
-  git status -s | awk '/ M / { print $2 }' | {
-    while read line; do
-      local file_name
-      file_name="$(basename "${line}")"
-      res="${res}${file_name}, "
-      git add "${line}"
-    done
-  }
+  while read -r line; do
+    local file_name
+    file_name="$(basename "${line}")"
+    res="${res}${file_name}, "
+    git add "${line}"
+  done < <(git status -s | awk '/ M / { print $2 }')
   git commit -m "${res}"
   local branch
   branch=$(git branch --show-current)
