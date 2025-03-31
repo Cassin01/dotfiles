@@ -37,7 +37,7 @@ function ratio_() {
 
 # hisf
 function hisf() {
-  history | tac | fzf | cut -d " " -f3- | pbcopy
+  history 1000 | tac | fzf | cut -d " " -f3- | pbcopy
 }
 
 # ディレクトリ移動
@@ -47,7 +47,7 @@ function hisf() {
 alias pd='pushd'
 function showd() {
     local path
-    path=$(dirs -p | /usr/local/bin/fzf)
+    path=$(dirs -p | /opt/homebrew/bin/fzf)
     if [ -d "${path}" ]; then
         pushd "${path}" || exit
     fi
@@ -56,7 +56,7 @@ function showd() {
 # with fzf
 function cdf() {
   local path dir
-  path=$(/usr/bin/find . -maxdepth 3 | /usr/local/bin/fzf)
+  path=$(/usr/bin/find . -depth 5 | /opt/homebrew/bin/fzf)
   dir="$(/usr/bin/dirname "${path}")"
   if [ -d "${path}" ]; then
     cd "${path}" || exit
@@ -69,7 +69,7 @@ function cdf() {
 function cdm() {
   local marker_list output
   if marker_list=$(path-marker -- show); then
-    if output=$(echo "${marker_list}" | /usr/local/bin/fzf); then
+    if output=$(echo "${marker_list}" | /opt/homebrew/bin/fzf); then
       cd "${output}" || exit
     fi
   fi
@@ -221,4 +221,12 @@ function gitu() {
   local branch
   branch=$(git branch --show-current)
   git push origin "${branch}"
+}
+
+# docker stop and remove all containers and images
+# ────────────────────────────────────────────────────────────
+
+function dockerd() {
+  docker ps -q | xargs -I {} sh -c 'docker stop {} && docker rm {}'
+  docker images -q | xargs -I {} docker rmi {}
 }
